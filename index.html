@@ -578,7 +578,7 @@ function renderText(text) {
   text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
   text = text.replace(/__CHIP:(\w+)__/g, (m, key) => {
     const inst = INSTRUMENTOS[key];
-    return inst ? `<span class="instrument-chip" onclick="openModal('${key}')">${inst.nombre}</span>` : key;
+    return inst ? `<span class="instrument-chip" data-key="${key}">${inst.nombre}</span>` : key;
   });
   const lines = text.split('\n');
   let html = ''; let inList = false;
@@ -618,7 +618,7 @@ function addReportCard(d) {
   div.className = 'msg agent';
   const brechas = d.brechas.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[-•]\s*/,'')}</li>`).join('');
   const pasos = d.pasos.split('\n').filter(l=>l.trim()).map((l,i)=>`<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('');
-  const chips = d.instrumentos.map(k => { const i = INSTRUMENTOS[k]; return i ? `<span class="instrument-chip" onclick="openModal('${k}')">${i.nombre}</span>` : ''; }).join('');
+  const chips = d.instrumentos.map(k => { const i = INSTRUMENTOS[k]; return i ? `<span class="instrument-chip" data-key="${k}">${i.nombre}</span>` : ''; }).join('');
   div.innerHTML = `<div class="report-card">
     <div class="report-card-title">Reporte de diagnóstico HSE</div>
     <div class="report-card-sub">${d.org} · ${d.programa} · ${d.horas} hs HSE</div>
@@ -627,11 +627,17 @@ function addReportCard(d) {
     <div class="report-section"><div class="report-section-label">Instrumentos recomendados</div><div style="margin-top:6px">${chips}</div><div style="font-size:11px;color:var(--ink-3);margin-top:8px;font-weight:500">Hacé clic en cada instrumento para ver los ítems completos, instrucciones y cómo interpretar resultados.</div></div>
     <div class="report-section"><div class="report-section-label">Próximos pasos</div><div class="report-section-content"><ol style="padding-left:16px">${pasos}</ol></div></div>
     <div class="report-actions">
-      <button class="report-btn primary" onclick="downloadPDF()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar reporte</button>
-      <button class="report-btn secondary" onclick="resetChat()">Nueva consulta</button>
+      <button id="btn-download-report" class="report-btn primary"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar reporte</button>
+      <button id="btn-reset-chat" class="report-btn secondary">Nueva consulta</button>
     </div>
   </div>`;
-  el.appendChild(div); el.scrollTop = el.scrollHeight;
+  el.appendChild(div);
+  div.querySelector('#btn-download-report').addEventListener('click', downloadPDF);
+  div.querySelector('#btn-reset-chat').addEventListener('click', resetChat);
+  div.querySelectorAll('.instrument-chip[data-key]').forEach(chip => {
+    chip.addEventListener('click', () => openModal(chip.dataset.key));
+  });
+  el.scrollTop = el.scrollHeight;
 }
 
 // ── API ───────────────────────────────────────────────────────
@@ -716,6 +722,12 @@ function closeModalDirect() { document.getElementById('modal-overlay').classList
 const inputEl = document.getElementById('user-input');
 inputEl.addEventListener('input', function() { this.style.height = '42px'; this.style.height = Math.min(this.scrollHeight, 120) + 'px'; });
 inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } });
+
+// Event delegation for instrument chips rendered in chat bubbles
+document.getElementById('messages').addEventListener('click', e => {
+  const chip = e.target.closest('.instrument-chip[data-key]');
+  if (chip) openModal(chip.dataset.key);
+});
 </script>
 </body>
 </html>
