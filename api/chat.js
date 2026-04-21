@@ -5,18 +5,8 @@ export default async function handler(req, res) {
   }
 
   // CORS — ajustá el origin a tu dominio en producción
-  const allowedOrigins = [
-  'https://hse-agent-zigla.vercel.app',
-  'https://hse-agent-zigla-git-main-zigla.vercel.app'
-];
-const origin = req.headers.origin;
-if (allowedOrigins.includes(origin)) {
-  res.setHeader('Access-Control-Allow-Origin', origin);
-}
-res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
-if (req.method === 'OPTIONS') {
-  return res.status(200).end();
-}
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
 
   const { messages, max_tokens } = req.body;
 
@@ -99,7 +89,7 @@ BUENAS PRÁCTICAS:
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-sonnet-4-5',
+        model: 'claude-sonnet-4-20250514',
         max_tokens: max_tokens || 1000,
         system: SYSTEM_PROMPT,
         messages
