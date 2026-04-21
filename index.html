@@ -711,63 +711,6 @@ function openModal(key) {
 function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open'); }
 function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
 
-// ── PDF ───────────────────────────────────────────────────────
-function downloadPDF() {
-  if (!reportData) return;
-  const d = reportData;
-  const fichas = d.instrumentos.map(key => {
-    const inst = INSTRUMENTOS[key];
-    if (!inst) return '';
-    const items = inst.items.map((item, i) => `  ${item.n}. ${item.text}${item.inv ? ' [Invertido]' : ''}\n     Dimensión: ${item.dim}`).join('\n');
-    const escala = inst.escala.join(' / ');
-    return `\n${'━'.repeat(60)}\n${inst.nombre.toUpperCase()}\nAutor/a: ${inst.autor}\n${inst.descripcion}\n\nDimensiones:\n${inst.dimensiones.map(d=>`  • ${d}`).join('\n')}\n\nEscala: ${escala}\n\nAplicación:\n  • Cuándo: ${inst.aplicacion.cuando}\n  • Quién: ${inst.aplicacion.quien}\n  • Tiempo: ${inst.aplicacion.tiempo}\n\nÍtems completos (${inst.items.length}):\n${items}\n\nNota: ${inst.nota}`;
-  }).join('\n');
-
-  const brechas = d.brechas.split('\n').filter(l=>l.trim()).map(l=>`  • ${l.replace(/^[-•]\s*/,'')}`).join('\n');
-  const pasos = d.pasos.split('\n').filter(l=>l.trim()).map((l,i)=>`  ${i+1}. ${l.replace(/^\d+\.\s*/,'')}`).join('\n');
-
-  const content = `ZIGLA — CONSULTOR HSE
-REPORTE DE DIAGNÓSTICO DE MEDICIÓN DE HABILIDADES SOCIOEMOCIONALES
-${'═'.repeat(60)}
-
-DATOS DEL PROGRAMA
-${'─'.repeat(40)}
-Organización:  ${d.org}
-Programa:      ${d.programa}
-Horas de HSE:  ${d.horas}
-
-${'═'.repeat(60)}
-SITUACIÓN ACTUAL
-${'─'.repeat(40)}
-${d.situacion}
-
-${'═'.repeat(60)}
-BRECHAS IDENTIFICADAS
-${'─'.repeat(40)}
-${brechas}
-
-${'═'.repeat(60)}
-PRÓXIMOS PASOS
-${'─'.repeat(40)}
-${pasos}
-
-${'═'.repeat(60)}
-INSTRUMENTOS RECOMENDADOS — FICHAS COMPLETAS
-${'─'.repeat(40)}
-${fichas}
-
-${'═'.repeat(60)}
-Generado por Consultor HSE — ZIGLA
-zigla.la | ${new Date().toLocaleDateString('es-AR', {month:'long', year:'numeric'})}` ;
-
-  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = `Reporte_HSE_${d.org.replace(/\s+/g,'_').slice(0,30)}_ZIGLA.txt`;
-  a.click();
-  URL.revokeObjectURL(url);
-}
 
 // ── TEXTAREA ──────────────────────────────────────────────────
 const inputEl = document.getElementById('user-input');
