@@ -5,8 +5,18 @@ export default async function handler(req, res) {
   }
 
   // CORS — ajustá el origin a tu dominio en producción
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+  const allowedOrigins = [
+  'https://hse-agent-zigla.vercel.app',
+  'https://hse-agent-zigla-git-main-zigla.vercel.app'
+];
+const origin = req.headers.origin;
+if (allowedOrigins.includes(origin)) {
+  res.setHeader('Access-Control-Allow-Origin', origin);
+}
+res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+if (req.method === 'OPTIONS') {
+  return res.status(200).end();
+}
 
   const { messages, max_tokens } = req.body;
 
