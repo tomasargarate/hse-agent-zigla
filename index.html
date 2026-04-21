@@ -569,7 +569,7 @@ function parseResponse(text) {
 
 function parseReport(raw) {
   const get = k => { const m = raw.match(new RegExp(k + ':\\s*([^\\n]+(?:\\n(?!\\w+:)[^\\n]+)*)')); return m ? m[1].trim() : ''; };
-  return { org: get('ORGANIZACIÓN'), programa: get('PROGRAMA'), horas: get('HORAS_HSE'), situacion: get('SITUACION_ACTUAL'), brechas: get('BRECHAS'), instrumentos: get('INSTRUMENTOS_RECOMENDADOS').split(',').map(s=>s.trim()).filter(Boolean), pasos: get('PROXIMOS_PASOS') };
+  return { org: get('ORGANIZACIÓN'), programa: get('PROGRAMA'), horas: get('HORAS_HSE'), situacion: get('SITUACION_ACTUAL'), brechas: get('BRECHAS'), instrumentos: get('INSTRUMENTOS_RECOMENDADOS').split(',').map(s=>s.trim().replace(/\[INSTRUMENTO:/g,'').replace(/\]/g,'')).filter(Boolean), pasos: get('PROXIMOS_PASOS') };
 }
 
 // ── RENDER ────────────────────────────────────────────────────
