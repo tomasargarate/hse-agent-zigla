@@ -4,664 +4,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Consultor HSE — ZIGLA</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
-  --green: #1D9E75;
-  --green-dark: #0F6E56;
-  --green-light: #E1F5EE;
-  --green-mid: #5DCAA5;
-  --ink: #1a1a18;
-  --ink-2: #4a4a46;
-  --ink-3: #8a8a84;
-  --bg: #f7f6f2;
+  --navy: #151F6D;
+  --blue: #146BF6;
+  --red: #E85746;
+  --yellow: #FCCA34;
+  --green: #A1C2A3;
+  --lightblue: #70AAF6;
+  --bg: #F4F5FA;
   --bg-card: #ffffff;
-  --border: #e8e7e2;
-  --border-2: #d4d3cd;
-  --amber: #E8A020;
-  --amber-light: #FEF3DC;
-  --red: #D94040;
-  --red-light: #FDEAEA;
+  --border: #E2E4EE;
+  --border-2: #C8CADB;
+  --ink: #1a1a2e;
+  --ink-2: #444466;
+  --ink-3: #8888aa;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--bg);
-  color: var(--ink);
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 0;
-}
+body { font-family: 'Montserrat', sans-serif; background: var(--bg); color: var(--ink); min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; }
 
-/* SETUP SCREEN */
-#setup-screen {
-  width: 100%;
-  max-width: 460px;
-  padding: 48px 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 32px;
-  animation: fadeUp .5s ease both;
-}
-.setup-logo {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-.setup-logo-dot {
-  width: 36px; height: 36px;
-  background: var(--green);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-}
-.setup-logo-dot svg { width: 18px; height: 18px; fill: white; }
-.setup-logo-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 22px;
-  color: var(--ink);
-  letter-spacing: -0.3px;
-}
-.setup-card {
-  width: 100%;
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 32px;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-.setup-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 24px;
-  color: var(--ink);
-  line-height: 1.2;
-}
-.setup-subtitle {
-  font-size: 14px;
-  color: var(--ink-2);
-  line-height: 1.6;
-}
-.setup-field label {
-  display: block;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: .6px;
-  margin-bottom: 8px;
-}
-.setup-field input {
-  width: 100%;
-  padding: 11px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--ink);
-  background: var(--bg);
-  outline: none;
-  transition: border-color .2s;
-}
-.setup-field input:focus { border-color: var(--green); background: #fff; }
-.setup-btn {
-  width: 100%;
-  padding: 13px;
-  background: var(--green);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background .2s, transform .1s;
-}
-.setup-btn:hover { background: var(--green-dark); }
-.setup-btn:active { transform: scale(.98); }
-.setup-error {
-  font-size: 13px;
-  color: var(--red);
-  display: none;
-}
 
-/* CHAT APP */
-#chat-app {
-  display: none;
-  width: 100%;
-  max-width: 720px;
-  height: 100vh;
-  max-height: 100vh;
-  flex-direction: column;
-  background: var(--bg-card);
-  overflow: hidden;
-}
+/* CHAT */
+#chat-app { display: flex; width: 100%; max-width: 720px; height: 100vh; flex-direction: column; background: var(--bg-card); overflow: hidden; }
 
 /* HEADER */
-#chat-header {
-  padding: 0 20px;
-  height: 60px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-shrink: 0;
-  background: var(--bg-card);
-}
-.ch-logo {
-  width: 32px; height: 32px;
-  background: var(--green);
-  border-radius: 8px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.ch-logo svg { width: 16px; height: 16px; fill: white; }
-.ch-name {
-  font-family: 'DM Serif Display', serif;
-  font-size: 17px;
-  color: var(--ink);
-}
-.ch-status {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 12px;
-  color: var(--ink-3);
-}
-.ch-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--green-mid);
-}
-.ch-actions {
-  margin-left: auto;
-  display: flex;
-  gap: 8px;
-}
-.ch-btn {
-  padding: 6px 12px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 12px;
-  color: var(--ink-2);
-  cursor: pointer;
-  transition: all .15s;
-  display: flex; align-items: center; gap: 5px;
-}
-.ch-btn:hover { background: var(--bg); border-color: var(--border-2); color: var(--ink); }
-.ch-btn.primary { background: var(--green); color: white; border-color: var(--green); }
-.ch-btn.primary:hover { background: var(--green-dark); }
-.ch-btn svg { width: 13px; height: 13px; }
+#chat-header { padding: 0 20px; height: 58px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 12px; flex-shrink: 0; }
+.ch-logo { width: 30px; height: 30px; background: var(--navy); border-radius: 7px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.ch-logo span { color: white; font-weight: 700; font-size: 10px; letter-spacing: -1px; }
+.ch-name { font-weight: 600; font-size: 15px; color: var(--navy); }
+.ch-status { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--ink-3); font-weight: 500; }
+.ch-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+.ch-actions { margin-left: auto; }
+.ch-btn { padding: 6px 12px; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; font-family: 'Montserrat', sans-serif; font-size: 11px; font-weight: 600; color: var(--ink-2); cursor: pointer; transition: all .15s; letter-spacing: .2px; }
+.ch-btn:hover { border-color: var(--navy); color: var(--navy); }
 
 /* PROGRESS */
-#progress-bar {
-  padding: 10px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: 0;
-  flex-shrink: 0;
-  background: var(--bg-card);
-}
-.prog-item {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 5px;
-  cursor: default;
-}
-.prog-label {
-  font-size: 10px;
-  color: var(--ink-3);
-  text-transform: uppercase;
-  letter-spacing: .5px;
-  font-weight: 500;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.prog-track {
-  height: 3px;
-  border-radius: 2px;
-  background: var(--border);
-  transition: background .4s;
-}
-.prog-item.done .prog-track { background: var(--green); }
-.prog-item.done .prog-label { color: var(--green-dark); }
-.prog-item.active .prog-track { background: var(--green-mid); }
-.prog-item.active .prog-label { color: var(--green); }
+#progress-bar { padding: 10px 20px; border-bottom: 1px solid var(--border); display: flex; gap: 6px; flex-shrink: 0; }
+.prog-item { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.prog-label { font-size: 9px; color: var(--ink-3); text-transform: uppercase; letter-spacing: .6px; font-weight: 600; }
+.prog-track { height: 3px; border-radius: 2px; background: var(--border); transition: background .4s; }
+.prog-item.done .prog-track { background: var(--navy); }
+.prog-item.done .prog-label { color: var(--navy); }
+.prog-item.active .prog-track { background: var(--blue); }
+.prog-item.active .prog-label { color: var(--blue); }
 
 /* MESSAGES */
-#messages {
-  flex: 1;
-  overflow-y: auto;
-  padding: 24px 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  scroll-behavior: smooth;
-}
+#messages { flex: 1; overflow-y: auto; padding: 20px; display: flex; flex-direction: column; gap: 14px; background: var(--bg); scroll-behavior: smooth; }
 #messages::-webkit-scrollbar { width: 4px; }
-#messages::-webkit-scrollbar-track { background: transparent; }
 #messages::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 4px; }
 
 /* WELCOME */
-#welcome-card {
-  background: var(--green-light);
-  border: 1px solid #9FE1CB;
-  border-radius: 14px;
-  padding: 20px;
-  display: flex;
-  gap: 14px;
-  animation: fadeUp .4s ease both;
-}
-.wc-icon {
-  width: 40px; height: 40px;
-  background: var(--green);
-  border-radius: 10px;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-}
-.wc-icon svg { width: 20px; height: 20px; fill: white; }
-.wc-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 16px;
-  color: var(--green-dark);
-  margin-bottom: 4px;
-}
-.wc-text {
-  font-size: 13px;
-  color: #0F6E56;
-  line-height: 1.55;
-}
+#welcome-card { background: var(--navy); border-radius: 14px; padding: 20px 22px; animation: fadeUp .4s ease both; }
+.wc-title { font-weight: 700; font-size: 15px; color: white; margin-bottom: 6px; letter-spacing: -.2px; }
+.wc-text { font-size: 12px; color: rgba(255,255,255,.75); line-height: 1.6; font-weight: 400; }
 
-/* MESSAGE BUBBLES */
-.msg {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  animation: fadeUp .3s ease both;
-}
+/* BUBBLES */
+.msg { display: flex; flex-direction: column; gap: 4px; animation: fadeUp .3s ease both; }
 .msg.user { align-items: flex-end; }
 .msg.agent { align-items: flex-start; }
-
-.bubble {
-  max-width: 78%;
-  padding: 12px 16px;
-  border-radius: 14px;
-  line-height: 1.6;
-  font-size: 14px;
-}
-.user .bubble {
-  background: var(--green);
-  color: white;
-  border-bottom-right-radius: 4px;
-}
-.agent .bubble {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  color: var(--ink);
-  border-bottom-left-radius: 4px;
-}
-.agent.module-end .bubble {
-  background: #fff;
-  border-color: var(--green-mid);
-  border-left: 3px solid var(--green);
-}
-
+.bubble { max-width: 80%; padding: 12px 15px; border-radius: 14px; line-height: 1.65; font-size: 13.5px; font-weight: 400; }
+.user .bubble { background: var(--navy); color: white; border-bottom-right-radius: 4px; }
+.agent .bubble { background: white; border: 1px solid var(--border); color: var(--ink); border-bottom-left-radius: 4px; }
 .bubble p { margin-bottom: 8px; }
 .bubble p:last-child { margin-bottom: 0; }
 .bubble ul { padding-left: 18px; margin: 6px 0; }
 .bubble li { margin-bottom: 5px; }
-.bubble strong { font-weight: 500; }
-.bubble em { font-style: italic; color: var(--ink-2); }
+.bubble strong { font-weight: 600; color: var(--navy); }
+.mod-tag { display: inline-flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #EEF2FF; color: var(--navy); margin-bottom: 8px; letter-spacing: .4px; text-transform: uppercase; }
 
-.mod-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 11px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: var(--green-light);
-  color: var(--green-dark);
-  margin-bottom: 8px;
-  letter-spacing: .2px;
-}
+/* INSTRUMENT CHIPS */
+.instrument-chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; background: #EEF2FF; border: 1.5px solid #C7D2FA; border-radius: 7px; font-size: 11px; font-weight: 600; color: var(--navy); cursor: pointer; transition: all .15s; margin: 2px; font-family: 'Montserrat', sans-serif; }
+.instrument-chip:hover { background: var(--navy); color: white; border-color: var(--navy); }
 
-/* REPORTE CARD */
-.report-card {
-  background: var(--bg-card);
-  border: 1.5px solid var(--green-mid);
-  border-radius: 14px;
-  padding: 20px;
-  max-width: 90%;
-  animation: fadeUp .3s ease both;
-}
-.report-card-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 18px;
-  color: var(--ink);
-  margin-bottom: 4px;
-}
-.report-card-sub {
-  font-size: 12px;
-  color: var(--ink-3);
-  margin-bottom: 16px;
-}
-.report-section {
-  margin-bottom: 14px;
-}
-.report-section-label {
-  font-size: 10px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--ink-3);
-  margin-bottom: 6px;
-}
-.report-section-content {
-  font-size: 13px;
-  color: var(--ink-2);
-  line-height: 1.55;
-}
-.instrument-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 5px 10px;
-  background: var(--green-light);
-  border: 1px solid #9FE1CB;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-  color: var(--green-dark);
-  cursor: pointer;
-  transition: all .15s;
-  margin: 3px;
-}
-.instrument-chip:hover {
-  background: var(--green);
-  color: white;
-  border-color: var(--green);
-}
-.instrument-chip svg { width: 12px; height: 12px; }
-.report-actions {
-  display: flex;
-  gap: 8px;
-  margin-top: 16px;
-  flex-wrap: wrap;
-}
-.report-btn {
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all .15s;
-  display: flex; align-items: center; gap: 6px;
-}
-.report-btn svg { width: 14px; height: 14px; }
-.report-btn.primary { background: var(--green); color: white; border: none; }
-.report-btn.primary:hover { background: var(--green-dark); }
-.report-btn.secondary { background: transparent; color: var(--ink-2); border: 1px solid var(--border); }
-.report-btn.secondary:hover { border-color: var(--border-2); color: var(--ink); }
+/* REPORT CARD */
+.report-card { background: white; border: 2px solid var(--navy); border-radius: 14px; padding: 22px; max-width: 92%; animation: fadeUp .3s ease both; }
+.report-card-title { font-weight: 700; font-size: 17px; color: var(--navy); margin-bottom: 3px; }
+.report-card-sub { font-size: 11px; color: var(--ink-3); font-weight: 500; margin-bottom: 18px; text-transform: uppercase; letter-spacing: .5px; }
+.report-section { margin-bottom: 14px; }
+.report-section-label { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--ink-3); margin-bottom: 7px; padding-bottom: 6px; border-bottom: 1px solid var(--border); }
+.report-section-content { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
+.report-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+.report-btn { padding: 8px 16px; border-radius: 8px; font-family: 'Montserrat', sans-serif; font-size: 12px; font-weight: 600; cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 6px; letter-spacing: .2px; }
+.report-btn svg { width: 13px; height: 13px; }
+.report-btn.primary { background: var(--navy); color: white; border: none; }
+.report-btn.primary:hover { opacity: .88; }
+.report-btn.secondary { background: transparent; color: var(--ink-2); border: 1.5px solid var(--border); }
+.report-btn.secondary:hover { border-color: var(--navy); color: var(--navy); }
 
 /* TYPING */
-.typing-bubble {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 14px;
-  border-bottom-left-radius: 4px;
-  padding: 14px 18px;
-  display: flex;
-  gap: 5px;
-  align-items: center;
-}
-.typing-bubble span {
-  width: 7px; height: 7px;
-  border-radius: 50%;
-  background: var(--ink-3);
-  opacity: .5;
-  animation: bounce 1.2s infinite;
-}
+.typing-bubble { background: white; border: 1px solid var(--border); border-radius: 14px; border-bottom-left-radius: 4px; padding: 14px 18px; display: flex; gap: 5px; align-items: center; }
+.typing-bubble span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-3); opacity: .5; animation: bounce 1.2s infinite; }
 .typing-bubble span:nth-child(2) { animation-delay: .2s; }
 .typing-bubble span:nth-child(3) { animation-delay: .4s; }
 @keyframes bounce { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-5px);opacity:.9} }
 
 /* INPUT */
-#input-area {
-  padding: 14px 16px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  gap: 10px;
-  align-items: flex-end;
-  flex-shrink: 0;
-  background: var(--bg-card);
-}
-#user-input {
-  flex: 1;
-  padding: 10px 14px;
-  border: 1.5px solid var(--border);
-  border-radius: 10px;
-  font-family: 'DM Sans', sans-serif;
-  font-size: 14px;
-  color: var(--ink);
-  background: var(--bg);
-  outline: none;
-  resize: none;
-  min-height: 42px;
-  max-height: 120px;
-  overflow-y: auto;
-  line-height: 1.5;
-  transition: border-color .2s;
-}
-#user-input:focus { border-color: var(--green); background: #fff; }
+#input-area { padding: 12px 16px; border-top: 1px solid var(--border); display: flex; gap: 10px; align-items: flex-end; flex-shrink: 0; background: white; }
+#user-input { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: 10px; font-family: 'Montserrat', sans-serif; font-size: 13px; color: var(--ink); background: var(--bg); outline: none; resize: none; min-height: 42px; max-height: 120px; line-height: 1.5; transition: border-color .2s; font-weight: 400; }
+#user-input:focus { border-color: var(--blue); background: #fff; }
 #user-input::placeholder { color: var(--ink-3); }
-#send-btn {
-  width: 42px; height: 42px;
-  background: var(--green);
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  flex-shrink: 0;
-  transition: background .15s, transform .1s;
-}
-#send-btn:hover { background: var(--green-dark); }
-#send-btn:active { transform: scale(.93); }
+#send-btn { width: 42px; height: 42px; background: var(--navy); border: none; border-radius: 10px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity .15s; }
+#send-btn:hover { opacity: .85; }
 #send-btn:disabled { background: var(--border); cursor: not-allowed; }
-#send-btn svg { width: 18px; height: 18px; fill: white; }
+#send-btn svg { width: 16px; height: 16px; fill: white; }
 
-/* MODAL FICHA */
-#modal-overlay {
-  position: fixed; inset: 0;
-  background: rgba(20,20,18,.5);
-  backdrop-filter: blur(4px);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  z-index: 100;
-  padding: 20px;
-}
+/* MODAL */
+#modal-overlay { position: fixed; inset: 0; background: rgba(21,31,109,.45); backdrop-filter: blur(4px); display: none; align-items: center; justify-content: center; z-index: 100; padding: 20px; }
 #modal-overlay.open { display: flex; }
-#modal {
-  background: var(--bg-card);
-  border-radius: 18px;
-  width: 100%;
-  max-width: 560px;
-  max-height: 85vh;
-  overflow-y: auto;
-  padding: 32px;
-  position: relative;
-  animation: fadeUp .25s ease both;
-}
+#modal { background: white; border-radius: 18px; width: 100%; max-width: 580px; max-height: 88vh; overflow-y: auto; padding: 32px; position: relative; animation: fadeUp .25s ease both; }
 #modal::-webkit-scrollbar { width: 4px; }
 #modal::-webkit-scrollbar-thumb { background: var(--border-2); border-radius: 4px; }
-.modal-close {
-  position: absolute;
-  top: 20px; right: 20px;
-  width: 32px; height: 32px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: transparent;
-  cursor: pointer;
-  display: flex; align-items: center; justify-content: center;
-  transition: all .15s;
-}
+.modal-close { position: absolute; top: 20px; right: 20px; width: 30px; height: 30px; border-radius: 8px; border: 1.5px solid var(--border); background: transparent; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all .15s; }
 .modal-close:hover { background: var(--bg); }
-.modal-close svg { width: 14px; height: 14px; stroke: var(--ink-2); fill: none; }
-.modal-tag {
-  font-size: 11px;
-  font-weight: 500;
-  padding: 3px 10px;
-  border-radius: 20px;
-  background: var(--green-light);
-  color: var(--green-dark);
-  display: inline-block;
-  margin-bottom: 12px;
-  letter-spacing: .3px;
-}
-.modal-title {
-  font-family: 'DM Serif Display', serif;
-  font-size: 22px;
-  color: var(--ink);
-  margin-bottom: 4px;
-  line-height: 1.2;
-}
-.modal-subtitle {
-  font-size: 13px;
-  color: var(--ink-3);
-  margin-bottom: 20px;
-}
-.modal-section {
-  margin-bottom: 20px;
-}
-.modal-section-title {
-  font-size: 11px;
-  font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: .7px;
-  color: var(--ink-3);
-  margin-bottom: 10px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--border);
-}
-.modal-dims {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  margin-bottom: 12px;
-}
-.modal-dim {
-  padding: 4px 10px;
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  font-size: 12px;
-  color: var(--ink-2);
-}
-.item-row {
-  padding: 10px 0;
-  border-bottom: 1px solid var(--border);
-  font-size: 13px;
-  color: var(--ink-2);
-  line-height: 1.5;
-  display: flex;
-  gap: 10px;
-}
+.modal-close svg { width: 13px; height: 13px; stroke: var(--ink-2); fill: none; }
+.modal-badge { font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #EEF2FF; color: var(--navy); display: inline-block; margin-bottom: 12px; letter-spacing: .5px; text-transform: uppercase; }
+.modal-title { font-weight: 700; font-size: 20px; color: var(--navy); margin-bottom: 3px; }
+.modal-subtitle { font-size: 12px; color: var(--ink-3); margin-bottom: 22px; font-weight: 500; }
+.modal-section { margin-bottom: 20px; }
+.modal-section-title { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .8px; color: var(--ink-3); margin-bottom: 10px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.modal-dims { display: flex; flex-wrap: wrap; gap: 6px; }
+.modal-dim { padding: 4px 10px; background: var(--bg); border: 1px solid var(--border); border-radius: 6px; font-size: 11px; color: var(--ink-2); font-weight: 500; }
+.item-row { padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 12.5px; color: var(--ink-2); line-height: 1.55; display: flex; gap: 10px; font-weight: 400; }
 .item-row:last-child { border-bottom: none; }
-.item-num {
-  font-size: 11px;
-  color: var(--ink-3);
-  min-width: 20px;
-  padding-top: 1px;
-  font-weight: 500;
-}
-.scale-row {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  margin-top: 6px;
-}
-.scale-pill {
-  padding: 3px 10px;
-  background: var(--green-light);
-  border-radius: 20px;
-  font-size: 11px;
-  color: var(--green-dark);
-  font-weight: 500;
-}
-.apply-row {
-  display: flex;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-.apply-chip {
-  padding: 5px 12px;
-  border-radius: 8px;
-  font-size: 12px;
-  font-weight: 500;
-}
-.apply-chip.when { background: var(--amber-light); color: #7a4f00; }
-.apply-chip.who { background: #EEF2FF; color: #3730a3; }
+.item-num { font-size: 10px; color: var(--ink-3); min-width: 22px; padding-top: 2px; font-weight: 700; }
+.item-tag { font-size: 9px; font-weight: 700; padding: 2px 6px; border-radius: 4px; margin-left: 6px; white-space: nowrap; }
+.item-tag.inv { background: #FFF0EE; color: var(--red); }
+.scale-row { display: flex; gap: 5px; flex-wrap: wrap; }
+.scale-pill { padding: 3px 9px; background: #EEF2FF; border-radius: 20px; font-size: 10px; color: var(--navy); font-weight: 600; }
+.apply-row { display: flex; gap: 7px; flex-wrap: wrap; }
+.apply-chip { padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: 600; font-family: 'Montserrat', sans-serif; }
+.apply-chip.when { background: #FEF8EC; color: #7a4f00; }
+.apply-chip.who { background: #EEF2FF; color: var(--navy); }
 .apply-chip.time { background: var(--bg); color: var(--ink-2); border: 1px solid var(--border); }
+.modal-note { background: #EEF2FF; border-radius: 10px; padding: 12px 14px; font-size: 12px; color: var(--navy); line-height: 1.55; margin-top: 4px; font-weight: 400; }
+.modal-note strong { font-weight: 700; }
 
 @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 </style>
 </head>
 <body>
 
-<!-- SETUP SCREEN -->
-<div id="setup-screen" style="display:none">
-  <div class="setup-logo">
-    <div class="setup-logo-dot">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-    </div>
-    <span class="setup-logo-name">ZIGLA</span>
-  </div>
-  <div class="setup-card">
-    <div>
-      <div class="setup-title">Consultor HSE</div>
-      <div class="setup-subtitle" style="margin-top:8px">Herramienta para organizaciones que trabajan empleabilidad juvenil en América Latina. Te ayuda a analizar y mejorar cómo medís habilidades socioemocionales.</div>
-    </div>
-    <div class="setup-field">
-      <label>API Key de Anthropic</label>
-      <input type="password" id="api-key-input" placeholder="sk-ant-..." autocomplete="off" />
-    </div>
-    <div class="setup-error" id="setup-error">La clave debe comenzar con sk-ant-</div>
-    <button class="setup-btn" onclick="startChat()">Comenzar consulta →</button>
-  </div>
-</div>
-
-<!-- CHAT APP -->
-<div id="chat-app" style="display:flex">
+<div id="chat-app">
   <div id="chat-header">
-    <div class="ch-logo">
-      <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14H9V8h2v8zm4 0h-2V8h2v8z"/></svg>
-    </div>
+    <div class="ch-logo"><span>ZIG</span></div>
     <div>
       <div class="ch-name">Consultor HSE</div>
     </div>
-    <div class="ch-status">
-      <div class="ch-dot"></div>
-      <span>ZIGLA</span>
-    </div>
+    <div class="ch-status"><div class="ch-dot"></div><span>ZIGLA</span></div>
     <div class="ch-actions">
-      <button class="ch-btn" onclick="resetChat()">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
-        Nueva consulta
-      </button>
+      <button class="ch-btn" onclick="resetChat()">Nueva consulta</button>
     </div>
   </div>
-
   <div id="progress-bar">
     <div class="prog-item active" id="ps1"><div class="prog-label">Diagnóstico</div><div class="prog-track"></div></div>
     <div class="prog-item" id="ps2"><div class="prog-label">Análisis</div><div class="prog-track"></div></div>
@@ -669,19 +163,12 @@ body {
     <div class="prog-item" id="ps4"><div class="prog-label">Recomendaciones</div><div class="prog-track"></div></div>
     <div class="prog-item" id="ps5"><div class="prog-label">Reporte</div><div class="prog-track"></div></div>
   </div>
-
   <div id="messages">
     <div id="welcome-card">
-      <div class="wc-icon">
-        <svg viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-      <div>
-        <div class="wc-title">Bienvenido al Consultor HSE</div>
-        <div class="wc-text">Voy a hacerte algunas preguntas sobre tu organización y programa para entender cómo están midiendo habilidades socioemocionales. Al final recibirás un reporte con recomendaciones y fichas de instrumentos.</div>
-      </div>
+      <div class="wc-title">Consultor HSE — ZIGLA</div>
+      <div class="wc-text">Voy a hacerte algunas preguntas sobre tu organización y programa para entender cómo están midiendo habilidades socioemocionales. Al final recibirás un reporte con recomendaciones y fichas completas de instrumentos.</div>
     </div>
   </div>
-
   <div id="input-area">
     <textarea id="user-input" placeholder="Escribí tu respuesta..."></textarea>
     <button id="send-btn" onclick="handleSend()">
@@ -690,7 +177,6 @@ body {
   </div>
 </div>
 
-<!-- MODAL FICHA INSTRUMENTO -->
 <div id="modal-overlay" onclick="closeModal(event)">
   <div id="modal">
     <button class="modal-close" onclick="closeModalDirect()">
@@ -701,214 +187,315 @@ body {
 </div>
 
 <script>
-// ── INSTRUMENTOS DATA ──────────────────────────────────────────
+// ── INSTRUMENTOS COMPLETOS (del DOCX Estado del Arte v2) ──────
 const INSTRUMENTOS = {
   'CPS': {
-    nombre: 'CPS Adaptado',
-    autor: 'ZIGLA',
-    descripcion: 'Mide competencias para la empleabilidad en jóvenes latinoamericanos en contextos de vulnerabilidad.',
-    dimensiones: ['Autogestión', 'Relacionamiento', 'Comunicación', 'Resolución de problemas'],
-    escala: ['1 — Nunca', '2 — Pocas veces', '3 — A veces', '4 — Frecuentemente', '5 — Siempre'],
+    nombre: 'Escala CPS Adaptada',
+    autor: 'Dra. Mayra Brea (Banco Mundial, 2010-2011). Adaptada por ZIGLA.',
+    descripcion: 'Mide competencias personales y sociales para la empleabilidad. 44 ítems, 6 dimensiones. Normalizada con ~4.000 jóvenes en América Latina. Instrumento de referencia del ecosistema ZIGLA/EMpower.',
+    dimensiones: ['Liderazgo (7 ítems)', 'Comportamiento ante conflictos (10 ítems)', 'Autoestima (4 ítems)', 'Habilidad para relacionarse (5 ítems)', 'Organización y orden (6 ítems)', 'Empatía y Comunicación (12 ítems)'],
+    escala: ['0 — Nada parecido a mí', '1 — Poco parecido a mí', '2 — Parecido a mí', '3 — Muy parecido a mí'],
     items: [
-      'Puedo establecer metas claras para alcanzar lo que quiero.',
-      'Me organizo para cumplir con mis tareas a tiempo.',
-      'Cuando cometo un error, busco la manera de corregirlo.',
-      'Puedo trabajar en equipo respetando las opiniones de los demás.',
-      'Me resulta fácil pedir ayuda cuando la necesito.',
-      'Puedo expresar mis ideas con claridad ante otras personas.',
-      'Escucho con atención cuando alguien me habla.',
-      'Cuando tengo un problema, pienso en varias soluciones antes de actuar.',
+      { n:'P1', text:'Tengo dificultad para encontrar las palabras precisas para lo que quiero decir', dim:'Empatía y Comunicación', inv:true },
+      { n:'P2', text:'Le caigo bien a jóvenes de mi edad', dim:'Autoestima', inv:false },
+      { n:'P3', text:'En un conflicto, trato de considerar los modos de pensar de los demás, antes de llegar a una solución', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P4', text:'Suelo tomar decisiones sin pensar mucho', dim:'Comportamiento ante conflicto', inv:true },
+      { n:'P5', text:'Tengo facilidad para calcular el tiempo que me tomará hacer algo', dim:'Organización y orden', inv:false },
+      { n:'P6', text:'Puedo controlarme y hacer mis deberes, a pesar de que me provoque hacer algo más agradable', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P7', text:'Las personas se molestan por la forma cómo las trato', dim:'Empatía y Comunicación', inv:true },
+      { n:'P8', text:'Me cuesta entender lo que otras personas me dicen', dim:'Empatía y Comunicación', inv:true },
+      { n:'P9', text:'Cuando trabajo, me esfuerzo por mantener ordenados los materiales que utilizo', dim:'Organización y orden', inv:false },
+      { n:'P10', text:'Muchos/as de mis compañero/as me buscan para hacer cosas juntos/as', dim:'Liderazgo', inv:false },
+      { n:'P11', text:'Cuando me relaciono con otras personas, trato de encontrar lo bueno de ellas', dim:'Autoestima', inv:false },
+      { n:'P12', text:'Cuando trabajo con otras personas, me es fácil comprometerme con la meta del equipo', dim:'Organización y orden', inv:false },
+      { n:'P13', text:'Anticipo lo que podría pasar cuando tengo que tomar una decisión', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P14', text:'Estoy satisfecho/a con lo que hago en mi vida', dim:'Empatía y Comunicación', inv:false },
+      { n:'P15', text:'Me resulta fácil expresarle a mis amigos/as cómo me siento sobre algo', dim:'Habilidad para relacionarse', inv:false },
+      { n:'P16', text:'A veces doy muchas vueltas para expresar una idea', dim:'Empatía y Comunicación', inv:true },
+      { n:'P17', text:'Cuando tengo que realizar algún trabajo, me es fácil saber qué materiales necesito', dim:'Organización y orden', inv:false },
+      { n:'P18', text:'Encuentro la manera de arreglar los conflictos que tengo con mis amistades', dim:'Habilidad para relacionarse', inv:false },
+      { n:'P19', text:'Siento que puedo controlar mis emociones', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P20', text:'Puedo hacer que mis compañeros/as quieran colaborar con el grupo', dim:'Habilidad para relacionarse', inv:false },
+      { n:'P21', text:'Trato de imponer mi opinión sin escuchar a los demás', dim:'Empatía y Comunicación', inv:true },
+      { n:'P22', text:'Pienso en varias alternativas, antes de decidir algo', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P23', text:'Ante una necesidad de mi comunidad, trato de participar activamente', dim:'Liderazgo', inv:false },
+      { n:'P24', text:'Cuando sucede algo que me emociona, mantengo la calma', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P25', text:'Mis compañeros/as me buscan porque sé cómo lograr resultados', dim:'Liderazgo', inv:false },
+      { n:'P26', text:'Me cuesta tener en cuenta los sentimientos de los demás', dim:'Empatía y Comunicación', inv:true },
+      { n:'P27', text:'En una discusión, sé cómo expresar mis ideas con claridad', dim:'Liderazgo', inv:false },
+      { n:'P28', text:'Chequeo si la decisión que tomé para resolver un problema fue la más apropiada', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P29', text:'Hago amigos/as con facilidad', dim:'Habilidad para relacionarse', inv:false },
+      { n:'P30', text:'Tengo más cualidades que defectos', dim:'Autoestima', inv:false },
+      { n:'P31', text:'Cuando trabajo en equipo, puedo lograr mejores cosas', dim:'Organización y orden', inv:false },
+      { n:'P32', text:'Me resulta difícil aceptar las costumbres de grupos diferentes al mío', dim:'Empatía y Comunicación', inv:true },
+      { n:'P33', text:'Cuando termino de hacer algo, me encargo de que los materiales utilizados sean guardados en su lugar', dim:'Organización y orden', inv:false },
+      { n:'P34', text:'Estoy contento/a con la relación que tengo con mis amistades', dim:'Autoestima', inv:false },
+      { n:'P35', text:'Sé cómo llevarme bien con diferentes tipos de personas', dim:'Habilidad para relacionarse', inv:false },
+      { n:'P36', text:'Cuando trabajo en un grupo, puedo ponerme de acuerdo con los demás sobre lo que tenemos que hacer', dim:'Liderazgo', inv:false },
+      { n:'P37', text:'Puedo lograr que muchas personas me admiren', dim:'Liderazgo', inv:false },
+      { n:'P38', text:'Si sigo como ahora, mi futuro será favorable', dim:'Empatía y Comunicación', inv:false },
+      { n:'P39', text:'Busco información relacionada con el problema antes de tomar una decisión', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P40', text:'Cuando existen posiciones contrarias, trato de ayudar a encontrar una solución al problema', dim:'Comportamiento ante conflicto', inv:false },
+      { n:'P41', text:'Tengo problemas para relacionarme con otros/as jóvenes', dim:'Empatía y Comunicación', inv:true },
+      { n:'P42', text:'Propongo ideas para guiar a mis compañeros/as hacia el logro de un objetivo', dim:'Liderazgo', inv:false },
+      { n:'P43', text:'Pienso que la mayoría de los/as jóvenes de mi edad son más hábiles que yo', dim:'Empatía y Comunicación', inv:true },
+      { n:'P44', text:'Me resulta fácil ponerme en el lugar de otras personas', dim:'Empatía y Comunicación', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post programa', quien: 'Autoreporte del joven', tiempo: '10-12 min' },
-    nota: 'Instrumento desarrollado y validado por ZIGLA para programas de empleabilidad en LAC. Recomendado como instrumento principal.'
+    aplicacion: { cuando: 'Pre y post programa (mín. 3 meses de intervalo)', quien: 'Autoreporte del joven', tiempo: '15-20 min' },
+    nota: 'Instrumento de referencia del ecosistema ZIGLA/EMpower. Los ítems marcados (Inv) se puntúan de forma invertida. Muestra mínima recomendada: 30 participantes por grupo para análisis agregado.'
   },
   'ROSENBERG': {
-    nombre: 'Escala de Autoestima de Rosenberg',
-    autor: 'M. Rosenberg (1965)',
-    descripcion: 'Mide autoestima global. Uno de los instrumentos más utilizados y validados a nivel mundial.',
-    dimensiones: ['Autoestima positiva', 'Autoestima negativa (reverso)'],
-    escala: ['1 — Muy en desacuerdo', '2 — En desacuerdo', '3 — De acuerdo', '4 — Muy de acuerdo'],
+    nombre: 'Escala de Autoestima de Rosenberg (EAR)',
+    autor: 'Morris Rosenberg (1965)',
+    descripcion: 'Mide autoestima global: el nivel de satisfacción que una persona tiene consigo misma como totalidad. Uno de los instrumentos más utilizados y validados a nivel mundial. Dominio público.',
+    dimensiones: ['Autoestima global'],
+    escala: ['3 — Muy de acuerdo', '2 — De acuerdo', '1 — En desacuerdo', '0 — Muy en desacuerdo'],
     items: [
-      'Siento que soy una persona digna de aprecio, al menos en igual medida que los demás.',
-      'Me inclino a pensar que, en conjunto, soy un fracasado/a. (R)',
-      'Creo que tengo varias cualidades buenas.',
-      'Puedo hacer las cosas tan bien como la mayoría de las personas.',
-      'Creo que no tengo muchos motivos para sentirme orgulloso/a. (R)',
-      'Tengo una actitud positiva hacia mí mismo/a.',
-      'En general, estoy satisfecho/a conmigo mismo/a.',
-      'Desearía valorarme más. (R)',
-      'A veces me siento verdaderamente inútil. (R)',
-      'A veces pienso que no soy bueno/a para nada. (R)',
+      { n:'1', text:'En general estoy satisfecho/a conmigo mismo/a', dim:'Autoestima', inv:false },
+      { n:'2', text:'A veces pienso que no soy bueno/a para nada', dim:'Autoestima', inv:true },
+      { n:'3', text:'Creo que tengo algunas buenas cualidades', dim:'Autoestima', inv:false },
+      { n:'4', text:'Soy capaz de hacer las cosas tan bien como la mayoría de la gente', dim:'Autoestima', inv:false },
+      { n:'5', text:'Creo que no tengo mucho de lo que sentirme orgulloso/a', dim:'Autoestima', inv:true },
+      { n:'6', text:'A veces me siento verdaderamente inútil', dim:'Autoestima', inv:true },
+      { n:'7', text:'Siento que soy una persona digna de estima, al menos en igual medida que los demás', dim:'Autoestima', inv:false },
+      { n:'8', text:'Desearía valorarme más a mí mismo/a', dim:'Autoestima', inv:true },
+      { n:'9', text:'En definitiva, tiendo a pensar que soy un fracasado/a', dim:'Autoestima', inv:true },
+      { n:'10', text:'Tengo una actitud positiva hacia mí mismo/a', dim:'Autoestima', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '5 min' },
-    nota: 'Ítems con (R) se puntúan de forma inversa. Puntaje total: 10-40. Mayor puntaje = mayor autoestima.'
+    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '3-5 min' },
+    nota: 'Ítems (Inv) se puntúan de forma invertida. Puntaje total 0-30: 0-15 autoestima baja / 16-21 media / 22-30 alta. Libre uso, dominio público.'
   },
   'GRIT': {
-    nombre: 'Grit Scale',
-    autor: 'A. Duckworth (2007)',
-    descripcion: 'Mide perseverancia y pasión por metas a largo plazo. Muy relevante para empleabilidad sostenida.',
-    dimensiones: ['Consistencia del interés', 'Perseverancia del esfuerzo'],
-    escala: ['1 — Nada parecido a mí', '2 — Poco parecido', '3 — Algo parecido', '4 — Muy parecido', '5 — Muy parecido a mí'],
+    nombre: 'Escala GRIT — Perseverancia y Pasión',
+    autor: 'Angela L. Duckworth (2007). Versión revisada 13 ítems (ZIGLA).',
+    descripcion: 'Mide perseverancia y pasión por metas a largo plazo. Tres subescalas: consistencia del interés, perseverancia del esfuerzo y ambición.',
+    dimensiones: ['Consistencia del interés (ítems 4, 7, 8 — invertidos)', 'Perseverancia del esfuerzo (ítems 2, 3, 6, 9, 12, 13)', 'Grit Abreviado (ítems 1, 2, 3, 6, 9, 10, 12, 13)', 'Ambición (ítems 9, 10, 12, 13)'],
+    escala: ['1 — Nada parecido', '2 — Poco parecido', '3 — Algo parecido', '4 — Parecido', '5 — Muy parecido'],
     items: [
-      'Las nuevas ideas y proyectos a veces me distraen de los anteriores. (R)',
-      'Los contratiempos no me desaniman. He superado obstáculos importantes para conquistar desafíos.',
-      'He tenido obsesiones que me duraron solo unos meses. (R)',
-      'Soy trabajador/a y perseverante.',
-      'Muchas veces me propongo una meta pero luego elijo perseguir otra diferente. (R)',
-      'Tengo dificultad para mantener el foco en proyectos que llevan más de algunos meses en completarse. (R)',
-      'Termino todo lo que empiezo.',
-      'Soy muy trabajador/a.',
+      { n:'1', text:'Me propongo ser el/la mejor del mundo en las cosas que hago', dim:'Ambición / Grit abreviado', inv:false },
+      { n:'2', text:'He superado dificultades para conquistar un reto o algo importante', dim:'Perseverancia / Grit abreviado', inv:false },
+      { n:'3', text:'Ambiciono salir adelante', dim:'Perseverancia / Grit abreviado', inv:false },
+      { n:'4', text:'He estado obsesionado/a con ideas o proyectos, pero al poco tiempo pierdo el interés en ellos', dim:'Consistencia del interés', inv:true },
+      { n:'5', text:'Las dificultades no me desalientan', dim:'Grit total', inv:false },
+      { n:'6', text:'Soy una persona que trabaja duro', dim:'Perseverancia / Grit abreviado', inv:false },
+      { n:'7', text:'A menudo me propongo metas, pero luego persigo otras distintas', dim:'Consistencia del interés', inv:true },
+      { n:'8', text:'Tengo dificultad para mantener mi atención en proyectos que duran muchos meses en terminarse', dim:'Consistencia del interés', inv:true },
+      { n:'9', text:'Siempre termino lo que empiezo', dim:'Perseverancia / Grit abreviado / Ambición', inv:false },
+      { n:'10', text:'Lograr algo duradero es la meta más importante de mi vida', dim:'Ambición / Grit abreviado', inv:false },
+      { n:'11', text:'He logrado una meta que me llevó años de esfuerzo conseguir', dim:'Grit total', inv:false },
+      { n:'12', text:'Siempre busco tener éxito', dim:'Perseverancia / Grit abreviado / Ambición', inv:false },
+      { n:'13', text:'Soy dedicado/a y disciplinado/a', dim:'Perseverancia / Grit abreviado / Ambición', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post (mín. 20 hs de intervención)', quien: 'Autoreporte', tiempo: '8-10 min' },
-    nota: 'Requiere al menos 20-25 horas de intervención para esperar cambio medible. Ítems (R) se puntúan de forma inversa.'
+    aplicacion: { cuando: 'Pre y post (mínimo 20-25 hs de intervención)', quien: 'Autoreporte', tiempo: '5-8 min' },
+    nota: 'Ítems 4, 7 y 8 se puntúan de forma invertida. Promedio de subescala ≥ 4 = nivel alto. La investigación reciente muestra que el GRIT predice mejor resultados académicos que laborales en contextos de empleo informal — interpretar con cautela.'
   },
   'HOPE': {
-    nombre: 'Hope Scale',
-    autor: 'C.R. Snyder (1991)',
-    descripcion: 'Mide esperanza en dos dimensiones: agencia (capacidad de iniciar) y pathways (capacidad de planificar rutas hacia metas).',
-    dimensiones: ['Agencia', 'Pathways (pensamiento de rutas)'],
-    escala: ['1 — Definitivamente falso', '2 — Mayormente falso', '3 — Algo falso', '4 — Algo verdadero', '5 — Mayormente verdadero', '6 — Definitivamente verdadero'],
+    nombre: 'Escala de Esperanza de Snyder',
+    autor: 'C.R. Snyder y colaboradores (1991)',
+    descripcion: 'Mide esperanza en dos dimensiones: agencia (motivación para iniciar y mantener movimiento hacia metas) y pensamiento de caminos (capacidad de generar múltiples rutas para alcanzar objetivos).',
+    dimensiones: ['Agencia / Agency (ítems 2, 9, 10, 12)', 'Pensamiento de caminos / Pathways (ítems 1, 4, 6, 8)', 'Distractor — no se puntúan (ítems 3, 5, 7, 11)'],
+    escala: ['1 — Definitivamente falso', '2 — Mayormente falso', '3 — Algo falso', '4 — Ligeramente falso', '5 — Ligeramente verdadero', '6 — Algo verdadero', '7 — Mayormente verdadero', '8 — Definitivamente verdadero'],
     items: [
-      'Puedo pensar en muchas maneras de salir de un apuro.',
-      'Persigo mis metas con energía.',
-      'Hay muchas maneras de resolver cualquier problema que enfrento.',
-      'Puedo pensar en muchas formas de alcanzar mis metas actuales.',
-      'Incluso cuando otros se rinden, sé que puedo encontrar una manera de resolver el problema.',
-      'Mis experiencias pasadas me han preparado bien para mi futuro.',
-      'He tenido bastante éxito en la vida.',
-      'Cumplo las metas que me propongo.',
+      { n:'1', text:'Puedo pensar en muchas maneras de salir de un apuro', dim:'Pensamiento de caminos', inv:false },
+      { n:'2', text:'Persigo mis metas con energía', dim:'Agencia', inv:false },
+      { n:'3', text:'Me siento cansado/a la mayor parte del tiempo', dim:'Distractora', inv:false },
+      { n:'4', text:'Existen muchas maneras de resolver cualquier problema', dim:'Pensamiento de caminos', inv:false },
+      { n:'5', text:'Me desanimo fácilmente en una discusión', dim:'Distractora', inv:false },
+      { n:'6', text:'Puedo pensar en muchas maneras de obtener las cosas importantes para mí', dim:'Pensamiento de caminos', inv:false },
+      { n:'7', text:'Me preocupa mi salud', dim:'Distractora', inv:false },
+      { n:'8', text:'Incluso cuando otros se desaniman, sé que puedo encontrar una manera de resolver el problema', dim:'Pensamiento de caminos', inv:false },
+      { n:'9', text:'Mis experiencias pasadas me han preparado bien para mi futuro', dim:'Agencia', inv:false },
+      { n:'10', text:'He tenido bastante éxito en la vida', dim:'Agencia', inv:false },
+      { n:'11', text:'Usualmente me encuentro preocupado/a por algo', dim:'Distractora', inv:false },
+      { n:'12', text:'Cumplo las metas que me propongo', dim:'Agencia', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post (mín. 15 hs)', quien: 'Autoreporte', tiempo: '8 min' },
-    nota: 'Excelente para programas que trabajan proyecto de vida. Ítems 2, 4, 6, 8 = Agencia. Ítems 1, 3, 5, 7 = Pathways.'
+    aplicacion: { cuando: 'Pre y post (mín. 15 hs de intervención)', quien: 'Autoreporte', tiempo: '5-7 min' },
+    nota: 'No sumar los ítems distractor (3, 5, 7, 11). Puntaje total (Agencia + Pathways): rango 8-64. ≥40 = esperanza adecuada / <24 = esperanza baja. Excelente para programas que trabajan proyecto de vida.'
   },
   'GSE': {
-    nombre: 'General Self-Efficacy Scale (GSE)',
-    autor: 'R. Schwarzer & M. Jerusalem (1995)',
-    descripcion: 'Mide la creencia generalizada en la propia capacidad de enfrentar situaciones difíciles y adversidades.',
+    nombre: 'Escala de Autoeficacia General (GSE)',
+    autor: 'Ralf Schwarzer y Matthias Jerusalem (1995)',
+    descripcion: 'Mide la creencia generalizada en la propia capacidad de realizar tareas difíciles y manejar situaciones adversas. Uno de los predictores más consistentes de resultados laborales. Libre uso.',
     dimensiones: ['Autoeficacia general'],
-    escala: ['1 — Incorrecto', '2 — Apenas correcto', '3 — Bastante correcto', '4 — Correcto'],
+    escala: ['1 — Incorrecto', '2 — Apenas cierto', '3 — Más bien cierto', '4 — Cierto'],
     items: [
-      'Siempre logro resolver los problemas difíciles si me esfuerzo lo suficiente.',
-      'Si alguien se opone a mí, puedo encontrar los medios y formas de obtener lo que quiero.',
-      'Es fácil para mí aferrarme a mis metas y lograr mis objetivos.',
-      'Tengo confianza en que podría manejar eficientemente eventos inesperados.',
-      'Gracias a mis habilidades, sé cómo manejar situaciones imprevistas.',
-      'Puedo resolver la mayoría de los problemas si me esfuerzo lo necesario.',
-      'Permanezco tranquilo/a al enfrentar dificultades porque confío en mis habilidades.',
-      'Cuando me enfrento a un problema, generalmente se me ocurren varias soluciones.',
-      'Si estoy en un apuro, generalmente se me ocurre qué hacer.',
-      'Sin importar lo que pase, generalmente puedo manejarlo.',
+      { n:'1', text:'Puedo encontrar la manera de obtener lo que quiero aunque alguien se me oponga', dim:'Autoeficacia', inv:false },
+      { n:'2', text:'Puedo resolver problemas difíciles si me esfuerzo lo suficiente', dim:'Autoeficacia', inv:false },
+      { n:'3', text:'Me es fácil persistir en lo que me he propuesto hasta llegar a alcanzar mis metas', dim:'Autoeficacia', inv:false },
+      { n:'4', text:'Tengo confianza en que podría manejar eficientemente situaciones inesperadas', dim:'Autoeficacia', inv:false },
+      { n:'5', text:'Gracias a mis cualidades y recursos puedo superar situaciones imprevistas', dim:'Autoeficacia', inv:false },
+      { n:'6', text:'Cuando me encuentro en dificultades puedo permanecer tranquilo/a porque cuento con las habilidades necesarias para manejar situaciones difíciles', dim:'Autoeficacia', inv:false },
+      { n:'7', text:'Venga lo que venga, por lo general soy capaz de manejarlo', dim:'Autoeficacia', inv:false },
+      { n:'8', text:'Puedo resolver la mayoría de los problemas si me esfuerzo lo necesario', dim:'Autoeficacia', inv:false },
+      { n:'9', text:'Si me encuentro en una situación difícil, generalmente se me ocurre qué debo hacer', dim:'Autoeficacia', inv:false },
+      { n:'10', text:'Al tener que hacer frente a un problema, generalmente se me ocurren varias alternativas de cómo resolverlo', dim:'Autoeficacia', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '7-8 min' },
-    nota: 'Combinable con CPS para tener dimensión motivacional + conductual. Muy utilizado y validado en LAC.'
+    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '3-5 min' },
+    nota: 'Sumar los 10 ítems. Rango 10-40. Combinable con CPS para tener dimensión motivacional + conductual. Disponible libre en userpage.fu-berlin.de/~health/selfscal.htm'
   },
   'TMMS': {
-    nombre: 'TMMS-24',
-    autor: 'Mayer & Salovey (adaptación Fernández-Berrocal)',
-    descripcion: 'Mide inteligencia emocional percibida: qué tan consciente es la persona de sus emociones y qué tan bien las gestiona.',
-    dimensiones: ['Atención emocional', 'Claridad emocional', 'Reparación emocional'],
-    escala: ['1 — Nada de acuerdo', '2 — Algo de acuerdo', '3 — Bastante de acuerdo', '4 — Muy de acuerdo', '5 — Totalmente de acuerdo'],
+    nombre: 'TMMS-24 (Trait Meta-Mood Scale)',
+    autor: 'Salovey, Mayer et al. (1995). Versión española: Fernández-Berrocal et al. (2004).',
+    descripcion: 'Mide inteligencia emocional percibida en tres dimensiones: atención, claridad y reparación emocional. 24 ítems, 8 por subescala.',
+    dimensiones: ['Atención emocional (ítems 1-8)', 'Claridad emocional (ítems 9-16)', 'Reparación emocional (ítems 17-24)'],
+    escala: ['1 — Totalmente en desacuerdo', '2 — Algo en desacuerdo', '3 — Ni de acuerdo ni en desacuerdo', '4 — Algo de acuerdo', '5 — Totalmente de acuerdo'],
     items: [
-      'Presto mucha atención a los sentimientos.',
-      'Normalmente me preocupo mucho por lo que siento.',
-      'Normalmente dedico tiempo a pensar en mis emociones.',
-      'Pienso que merece la pena prestar atención a mis emociones y estado de ánimo.',
-      'Dejo que mis sentimientos afecten a mis pensamientos.',
-      'Pienso en mi estado de ánimo constantemente.',
-      'A menudo pienso en mis sentimientos.',
-      'Presto mucha atención a cómo me siento.',
-      'Tengo claros mis sentimientos.',
-      'Frecuentemente puedo definir mis sentimientos.',
+      { n:'1', text:'Presto mucha atención a los sentimientos', dim:'Atención emocional', inv:false },
+      { n:'2', text:'Normalmente me preocupo mucho por lo que siento', dim:'Atención emocional', inv:false },
+      { n:'3', text:'Normalmente dedico tiempo a pensar en mis emociones', dim:'Atención emocional', inv:false },
+      { n:'4', text:'Pienso que merece la pena prestar atención a mis emociones y estado de ánimo', dim:'Atención emocional', inv:false },
+      { n:'5', text:'Dejo que mis sentimientos afecten a mis pensamientos', dim:'Atención emocional', inv:false },
+      { n:'6', text:'Pienso en mi estado de ánimo constantemente', dim:'Atención emocional', inv:false },
+      { n:'7', text:'A menudo pienso en mis sentimientos', dim:'Atención emocional', inv:false },
+      { n:'8', text:'Presto mucha atención a cómo me siento', dim:'Atención emocional', inv:false },
+      { n:'9', text:'Tengo claros mis sentimientos', dim:'Claridad emocional', inv:false },
+      { n:'10', text:'Frecuentemente puedo definir mis sentimientos', dim:'Claridad emocional', inv:false },
+      { n:'11', text:'Casi siempre sé cómo me siento', dim:'Claridad emocional', inv:false },
+      { n:'12', text:'Normalmente conozco mis sentimientos sobre las personas', dim:'Claridad emocional', inv:false },
+      { n:'13', text:'A menudo me doy cuenta de mis sentimientos en diferentes situaciones', dim:'Claridad emocional', inv:false },
+      { n:'14', text:'Siempre puedo decir cómo me siento', dim:'Claridad emocional', inv:false },
+      { n:'15', text:'A veces puedo decir cuáles son mis emociones', dim:'Claridad emocional', inv:false },
+      { n:'16', text:'Puedo llegar a comprender mis sentimientos', dim:'Claridad emocional', inv:false },
+      { n:'17', text:'Aunque a veces me siento triste, suelo tener una visión optimista', dim:'Reparación emocional', inv:false },
+      { n:'18', text:'Aunque me sienta mal, procuro pensar en cosas agradables', dim:'Reparación emocional', inv:false },
+      { n:'19', text:'Cuando estoy triste, pienso en todos los placeres de la vida', dim:'Reparación emocional', inv:false },
+      { n:'20', text:'Intento tener pensamientos positivos aunque me sienta mal', dim:'Reparación emocional', inv:false },
+      { n:'21', text:'Si doy demasiadas vueltas a las cosas, complicándolas, trato de calmarme', dim:'Reparación emocional', inv:false },
+      { n:'22', text:'Me preocupo por tener un buen estado de ánimo', dim:'Reparación emocional', inv:false },
+      { n:'23', text:'Tengo mucha energía cuando me siento feliz', dim:'Reparación emocional', inv:false },
+      { n:'24', text:'Cuando estoy enfadado/a intento cambiar mi estado de ánimo', dim:'Reparación emocional', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '10-12 min' },
-    nota: 'Recomendado para programas con foco en regulación emocional y trabajo en equipo. 24 ítems en total (se muestran los primeros 10).'
+    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '8-12 min' },
+    nota: 'Rango por subescala: 8-40. Atención emocional muy alta (≥33 en hombres / ≥36 en mujeres) puede ser contraproducente — indica foco excesivo en emociones que puede generar parálisis.'
   },
   'CYRM': {
-    nombre: 'CYRM-R',
-    autor: 'M. Ungar & L. Liebenberg',
-    descripcion: 'Mide resiliencia desde un enfoque ecológico, considerando factores individuales, relacionales y comunitarios.',
-    dimensiones: ['Recursos individuales', 'Cuidado y apoyo', 'Participación y pertenencia'],
+    nombre: 'CYRM-R (Child and Youth Resilience Measure)',
+    autor: 'Ungar, Liebenberg y col. (2011, revisado 2019). Resilience Research Centre, Canadá.',
+    descripcion: 'Mide resiliencia desde enfoque ecológico. Único instrumento del kit que mide el entorno (no solo al individuo). 28 ítems en 3 niveles.',
+    dimensiones: ['Individual: Habilidades personales (ítems 1-7) + Apoyo espiritual (ítems 8-9)', 'Relacional: Cuidado familiar (ítems 10-14) + Apoyo de pares (ítems 15-19)', 'Comunitario: Estructura y seguridad (ítems 20-22) + Pertenencia (ítems 23-28)'],
     escala: ['1 — Nada', '2 — Un poco', '3 — Algo', '4 — Bastante', '5 — Mucho'],
     items: [
-      'Tengo acceso a servicios de salud cuando los necesito.',
-      'Tengo personas que me quieren y que se preocupan por mí.',
-      'Tengo personas a quienes puedo pedir ayuda cuando la necesito.',
-      'Tengo personas en mi comunidad que se preocupan por mí.',
-      'Me siento orgulloso/a de mi identidad cultural.',
-      'Tengo acceso a la educación que necesito.',
-      'Tengo personas en mi vida que me muestran cómo comportarme.',
-      'Puedo hablar sobre mis problemas con personas de mi comunidad.',
-      'Creo que tengo buenas cualidades.',
-      'Puedo resolver problemas por mi cuenta.',
+      { n:'1', text:'Sé cómo comportarme/actuar en diferentes situaciones (como en la escuela, casa o comunidad)', dim:'Habilidades personales', inv:false },
+      { n:'2', text:'Para mí es importante recibir educación', dim:'Habilidades personales', inv:false },
+      { n:'3', text:'Tengo oportunidades de aprender cosas que serán útiles cuando sea mayor', dim:'Habilidades personales', inv:false },
+      { n:'4', text:'Soy tratado/a de manera justa en mi comunidad', dim:'Habilidades personales', inv:false },
+      { n:'5', text:'Sé cómo controlarme cuando estoy enojado/a o molesto/a', dim:'Habilidades personales', inv:false },
+      { n:'6', text:'Sé lo que está bien y lo que está mal', dim:'Habilidades personales', inv:false },
+      { n:'7', text:'Me siento orgulloso/a de lo que soy y de lo que tengo', dim:'Habilidades personales', inv:false },
+      { n:'8', text:'Mi religión, espiritualidad o creencias personales me dan fortaleza', dim:'Apoyo espiritual', inv:false },
+      { n:'9', text:'Me gustan los rituales y tradiciones de mi familia o comunidad', dim:'Apoyo espiritual', inv:false },
+      { n:'10', text:'Mi(s) padre(s)/cuidador(es) realmente se preocupan por mí', dim:'Cuidado familiar', inv:false },
+      { n:'11', text:'Mi(s) padre(s)/cuidador(es) saben quiénes son mis amigos/as, qué me gusta hacer', dim:'Cuidado familiar', inv:false },
+      { n:'12', text:'Mi familia/cuidador(es) se preocupan por mí en tiempos difíciles', dim:'Cuidado familiar', inv:false },
+      { n:'13', text:'Hablo con mi familia/cuidador(es) sobre cómo me siento cuando estoy herido/a o triste', dim:'Cuidado familiar', inv:false },
+      { n:'14', text:'Me siento seguro/a cuando estoy con mi familia/cuidador(es)', dim:'Cuidado familiar', inv:false },
+      { n:'15', text:'A la gente le gusta pasar tiempo conmigo', dim:'Apoyo de pares', inv:false },
+      { n:'16', text:'Me llevo bien con las personas que me rodean', dim:'Apoyo de pares', inv:false },
+      { n:'17', text:'Me siento apoyado/a por mis amigos/as', dim:'Apoyo de pares', inv:false },
+      { n:'18', text:'Mis amigos/as se preocupan por mí en tiempos difíciles', dim:'Apoyo de pares', inv:false },
+      { n:'19', text:'Tengo oportunidades para mostrar a otros que estoy creciendo y que puedo hacer cosas por mí mismo/a', dim:'Apoyo de pares', inv:false },
+      { n:'20', text:'Si tengo hambre, hay suficiente comida', dim:'Estructura y seguridad', inv:false },
+      { n:'21', text:'Me siento seguro/a donde vivo', dim:'Estructura y seguridad', inv:false },
+      { n:'22', text:'Me siento seguro/a en mi escuela o en el lugar donde aprendo/trabajo', dim:'Estructura y seguridad', inv:false },
+      { n:'23', text:'Me siento parte de mi comunidad', dim:'Pertenencia', inv:false },
+      { n:'24', text:'Siento que pertenecía/pertenezco a mi escuela', dim:'Pertenencia', inv:false },
+      { n:'25', text:'Me gusta la manera en que mi familia/comunidad celebra las cosas importantes', dim:'Pertenencia', inv:false },
+      { n:'26', text:'Me identifico con la cultura de mi comunidad', dim:'Pertenencia', inv:false },
+      { n:'27', text:'Las personas de mi comunidad se ayudan entre sí', dim:'Pertenencia', inv:false },
+      { n:'28', text:'Hay personas adultas fuera de mi familia que se preocupan por mí y me apoyan', dim:'Pertenencia', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte (12+ años)', tiempo: '10 min' },
-    nota: 'Especialmente recomendado para poblaciones en alta vulnerabilidad. Considera factores protectores más allá del individuo.'
+    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte (12+ años)', tiempo: '10-15 min' },
+    nota: 'No hay ítems invertidos. Disponible en resilienceresearch.org. Especialmente valioso para poblaciones en alta vulnerabilidad porque mide factores del entorno, no solo capacidades individuales.'
   },
   'SDQ': {
     nombre: 'SDQ — Strengths and Difficulties Questionnaire',
-    autor: 'R. Goodman (1997)',
-    descripcion: 'Mide conducta prosocial y dificultades emocionales/conductuales. Tiene versión de autoreporte y hetero-reporte.',
-    dimensiones: ['Conducta prosocial', 'Hiperactividad', 'Problemas emocionales', 'Problemas de conducta', 'Problemas con pares'],
-    escala: ['0 — No es cierto', '1 — Es un poco cierto', '2 — Es muy cierto'],
+    autor: 'Robert Goodman (1997). Disponible en sdqinfo.org',
+    descripcion: 'Mide conducta prosocial y dificultades emocionales/conductuales. Único instrumento del kit con versión de reporte externo (facilitador o adulto referente).',
+    dimensiones: ['Síntomas emocionales (ítems 3,8,13,16,24)', 'Problemas de conducta (ítems 5,7,12,18,22)', 'Hiperactividad (ítems 2,10,15,21,25)', 'Problemas con pares (ítems 6,11,14,19,23)', 'Conducta prosocial (ítems 1,4,9,17,20)'],
+    escala: ['0 — No es cierto', '1 — Algo cierto', '2 — Muy cierto'],
     items: [
-      'Tengo en cuenta los sentimientos de otras personas.',
-      'Soy inquieto/a, hiperactivo/a, no puedo estar quieto/a mucho tiempo.',
-      'Con frecuencia tengo dolores de cabeza, estómago o náuseas.',
-      'Generalmente comparto con otros (comida, juegos, útiles).',
-      'Tengo muchos ataques de rabia o berrinches.',
-      'Más bien solitario/a, tiendo a jugar solo/a.',
-      'En general soy obediente, hago lo que los adultos me piden.',
-      'Tengo muchas preocupaciones, con frecuencia me angustio.',
-      'Si alguien está herido, angustiado o enfermo, ofrezco ayuda.',
-      'Me muevo mucho, con frecuencia cambio de lugar cuando debo quedarme sentado/a.',
+      { n:'1', text:'Intento ser amable con los demás. Me preocupan sus sentimientos', dim:'Conducta prosocial', inv:false },
+      { n:'2', text:'Soy inquieto/a, hiperactivo/a, no puedo estar quieto/a durante mucho tiempo', dim:'Hiperactividad', inv:false },
+      { n:'3', text:'Con frecuencia me duele la cabeza o el estómago, o me encuentro mal', dim:'Síntomas emocionales', inv:false },
+      { n:'4', text:'Cuando tengo algo que le pertenece a otra persona, normalmente lo comparto con ella', dim:'Conducta prosocial', inv:false },
+      { n:'5', text:'Me enfado mucho y frecuentemente pierdo el control', dim:'Problemas de conducta', inv:false },
+      { n:'6', text:'Prefiero estar solo/a que con personas de mi edad', dim:'Problemas con pares', inv:false },
+      { n:'7', text:'Normalmente hago lo que me dicen los adultos', dim:'Problemas de conducta', inv:true },
+      { n:'8', text:'Con frecuencia me preocupo', dim:'Síntomas emocionales', inv:false },
+      { n:'9', text:'Ayudo si alguien está herido, asustado o se siente mal', dim:'Conducta prosocial', inv:false },
+      { n:'10', text:'No puedo estarme quieto/a; me muevo demasiado', dim:'Hiperactividad', inv:false },
+      { n:'11', text:'Tengo un buen amigo/a o más', dim:'Problemas con pares', inv:true },
+      { n:'12', text:'Con frecuencia me peleo con otros/as jóvenes o me meto con ellos/as', dim:'Problemas de conducta', inv:false },
+      { n:'13', text:'Con frecuencia estoy triste, desanimado/a o lloroso/a', dim:'Síntomas emocionales', inv:false },
+      { n:'14', text:'En general, los demás jóvenes de mi edad me respetan', dim:'Problemas con pares', inv:true },
+      { n:'15', text:'Me distraigo con facilidad y me cuesta concentrarme', dim:'Hiperactividad', inv:false },
+      { n:'16', text:'Me pongo nervioso/a en situaciones nuevas; fácilmente pierdo la confianza en mí', dim:'Síntomas emocionales', inv:false },
+      { n:'17', text:'Trato bien a los niños/as más pequeños/as', dim:'Conducta prosocial', inv:false },
+      { n:'18', text:'Con frecuencia me acusan de mentir o de hacer trampas', dim:'Problemas de conducta', inv:false },
+      { n:'19', text:'Otros/as jóvenes se meten conmigo o se burlan de mí', dim:'Problemas con pares', inv:false },
+      { n:'20', text:'Con frecuencia me ofrezco para ayudar a los demás (padres, profesores, otros jóvenes)', dim:'Conducta prosocial', inv:false },
+      { n:'21', text:'Pienso las cosas antes de hacerlas', dim:'Hiperactividad', inv:true },
+      { n:'22', text:'Cojo cosas que no son mías (de casa, del colegio o de otros sitios)', dim:'Problemas de conducta', inv:false },
+      { n:'23', text:'Me llevo mejor con los adultos que con los jóvenes de mi edad', dim:'Problemas con pares', inv:false },
+      { n:'24', text:'Tengo muchos miedos, me asusto fácilmente', dim:'Síntomas emocionales', inv:false },
+      { n:'25', text:'Termino lo que empiezo; tengo buena concentración', dim:'Hiperactividad', inv:true },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte (11+) o docente/tutor', tiempo: '5-7 min' },
-    nota: 'Útil cuando hay educadores o tutores que pueden reportar sobre el joven. Gratuito y disponible en español en sdqinfo.org'
+    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte (11+) o facilitador/adulto referente', tiempo: '5-7 min' },
+    nota: 'Ítems marcados (Inv) se puntúan de forma invertida. Puntaje de dificultades total: 0-13 normal / 14-16 límite / 17-40 anormal. Conducta prosocial: 6-10 normal. Gratuito en sdqinfo.org. La versión de adulto referente permite triangulación y reducción del sesgo de deseabilidad social.'
   },
   'SECA': {
-    nombre: 'SECA — Social-Emotional Competence Assessment',
-    autor: 'AIR (American Institutes for Research)',
-    descripcion: 'Mide las 5 competencias del marco CASEL. Útil cuando el financiador exige reporte en ese framework internacional.',
-    dimensiones: ['Autoconciencia', 'Autogestión', 'Conciencia social', 'Habilidades relacionales', 'Toma de decisiones responsable'],
-    escala: ['1 — Nunca', '2 — Raramente', '3 — A veces', '4 — Frecuentemente', '5 — Siempre'],
+    nombre: 'SECA — Social and Emotional Competence Assessment',
+    autor: 'American Institutes for Research (AIR). Versión en español disponible.',
+    descripcion: 'Mide las 5 competencias del marco CASEL en formato de facilidad/dificultad. Útil como herramienta formativa dentro del programa y cuando el financiador exige reporte en framework CASEL.',
+    dimensiones: ['Autoconciencia: conciencia emocional + autoeficacia', 'Autogestión: manejo emocional + autodisciplina y metas', 'Conciencia social: empatía + perspectiva', 'Habilidades relacionales: comunicación + colaboración', 'Toma de decisiones responsable: pensamiento consecuente'],
+    escala: ['1 — Muy difícil', '2 — Difícil', '3 — Fácil', '4 — Muy fácil'],
     items: [
-      'Puedo identificar y nombrar mis emociones.',
-      'Puedo controlar mis emociones e impulsos cuando es necesario.',
-      'Me esfuerzo para alcanzar mis metas a largo plazo.',
-      'Entiendo que las personas de diferentes culturas tienen distintos puntos de vista.',
-      'Puedo trabajar de forma efectiva con personas que son diferentes a mí.',
-      'Puedo resolver conflictos de manera constructiva.',
-      'Considero las consecuencias de mis acciones antes de actuar.',
-      'Me responsabilizo de mis actos.',
-      'Puedo pedir y dar apoyo emocional a otros.',
-      'Me evalúo de forma realista: sé mis fortalezas y debilidades.',
+      { n:'1', text:'Saber cuáles son mis puntos fuertes', dim:'Autoconciencia', inv:false },
+      { n:'2', text:'Reconocer las emociones que siento', dim:'Autoconciencia', inv:false },
+      { n:'3', text:'Saber cuándo mis sentimientos me dificultan concentrarme', dim:'Autoconciencia', inv:false },
+      { n:'4', text:'Saber cómo mejorar en cosas que me resultan difíciles', dim:'Autoconciencia', inv:false },
+      { n:'5', text:'Saber cuándo estoy equivocado/a sobre algo', dim:'Autoconciencia', inv:false },
+      { n:'6', text:'Mantener la calma cuando me siento estresado/a', dim:'Autogestión', inv:false },
+      { n:'7', text:'Ser paciente incluso cuando estoy muy emocionado/a', dim:'Autogestión', inv:false },
+      { n:'8', text:'Sobrellevar momentos difíciles sin frustrarme', dim:'Autogestión', inv:false },
+      { n:'9', text:'Establecer metas para mí', dim:'Autogestión', inv:false },
+      { n:'10', text:'Alcanzar las metas que me he fijado', dim:'Autogestión', inv:false },
+      { n:'11', text:'Planear para entregar un proyecto a tiempo', dim:'Autogestión', inv:false },
+      { n:'12', text:'Saber lo que la gente puede sentir por la expresión de su rostro', dim:'Conciencia social', inv:false },
+      { n:'13', text:'Aprender de personas con opiniones diferentes', dim:'Conciencia social', inv:false },
+      { n:'14', text:'Saber cuándo alguien necesita ayuda', dim:'Conciencia social', inv:false },
+      { n:'15', text:'Compartir lo que estoy sintiendo con los demás', dim:'Habilidades relacionales', inv:false },
+      { n:'16', text:'Respetar opiniones de compañeros en desacuerdos', dim:'Habilidades relacionales', inv:false },
+      { n:'17', text:'Llevarme bien con mis compañeros', dim:'Habilidades relacionales', inv:false },
+      { n:'18', text:'Pensar en lo que podría pasar antes de tomar una decisión', dim:'Toma de decisiones', inv:false },
+      { n:'19', text:'Pensar en diferentes formas de resolver un problema', dim:'Toma de decisiones', inv:false },
+      { n:'20', text:'Saber lo que está bien o mal', dim:'Toma de decisiones', inv:false },
     ],
-    aplicacion: { cuando: 'Pre y post', quien: 'Autoreporte', tiempo: '12-15 min' },
-    nota: 'Permite alineación con marcos internacionales CASEL. Recomendado cuando el financiador exige reporte en ese framework.'
+    aplicacion: { cuando: 'Pre y post (también útil como evaluación formativa dentro del programa)', quien: 'Autoreporte', tiempo: '15-20 min' },
+    nota: 'Promedios ≤ 2.5 por dominio indican área problemática. ≥ 3.5 indica dominio fortalecido. Disponible con registro en americaninstitutes.org. Complemento ideal al CPS: el CPS pregunta "qué tan parecido soy a esto", el SECA pregunta "qué tan fácil/difícil me resulta esto".'
   }
 };
 
-// ── SYSTEM PROMPT ──────────────────────────────────────────────
+// ── SYSTEM PROMPT ─────────────────────────────────────────────
 const SYSTEM_PROMPT = `Sos un consultor especializado en medición de habilidades socioemocionales (HSE) para programas de empleabilidad juvenil en América Latina, desarrollado por ZIGLA.
 
 Tu rol es ayudar a organizaciones implementadoras a analizar cómo están evaluando la evolución de HSE en sus programas y ofrecerles sugerencias concretas para mejorar esa medición. No evaluás a los jóvenes directamente — trabajás con los equipos de las organizaciones.
 
 REGLAS DE TONO:
-- Usá lenguaje claro, cálido y profesional.
-- Evitá jerga académica innecesaria.
+- Usá lenguaje claro, directo y profesional. Sin metáforas ni analogías ilustrativas.
+- Evitá juicios sobre la organización. Si algo no está bien implementado, describilo en términos técnicos y ofrecé la alternativa.
 - Hacé una pregunta a la vez.
 - Cuando la organización comparte información, reconocé brevemente antes de continuar.
 - Usá el contexto acumulado para no repetir preguntas.
 - Nunca hagas más de 2 preguntas en un mismo mensaje.
 
 VARIABLE CALIBRADORA — HORAS DE HSE:
-Esta es la variable más importante para calibrar tus recomendaciones:
-- Menos de 10 horas: Recomendá medir exposición y satisfacción, no cambio de habilidades. Los instrumentos pueden usarse como línea de base para futuros ciclos. Nunca digas que no tiene sentido medir — convertí la limitación en oportunidad.
-- 10 a 25 horas: Recomendá medir cambio en 1-2 dimensiones acotadas, con expectativas modestas. Pre/post válido, seguimiento opcional.
-- Más de 25 horas: Medición completa posible: pre/post/seguimiento, múltiples dimensiones, análisis de evolución.
+Esta es la variable más importante para calibrar tus recomendaciones. No la uses como filtro — usala para ajustar qué conclusiones recomendar:
+- Menos de 10 horas: Los instrumentos pueden aplicarse como línea de base para futuros ciclos. En este contexto, la medición más adecuada es de exposición y satisfacción, no de cambio en habilidades.
+- 10 a 25 horas: Pre/post es válido para medir cambio en 1-2 dimensiones acotadas, con expectativas acordes a la intensidad de la intervención.
+- Más de 25 horas: Pre/post/seguimiento es viable. Se puede medir cambio en múltiples dimensiones y construir análisis de evolución.
 
 MÓDULOS DE LA CONVERSACIÓN:
-
 MÓDULO 1 — DIAGNÓSTICO INICIAL
 Recopilá conversacionalmente: nombre/tipo de organización, tipo de programa, población (edad, contexto), HSE que trabajan, instrumentos actuales, horas dedicadas a HSE.
 Al completar este módulo, escribí exactamente: [MODULO:2]
@@ -918,463 +505,274 @@ Profundizá: ¿en qué momento miden? (pre/post/seguimiento), ¿qué instrumento
 Al completar este módulo, escribí exactamente: [MODULO:3]
 
 MÓDULO 3 — EVALUACIÓN DE CALIDAD
-Analizá: validez del instrumento, consistencia de aplicación, timing adecuado, comparabilidad entre cohortes. Sé honesto pero constructivo.
+Analizá la medición actual: validez del instrumento, consistencia de aplicación, timing respecto a la intervención, comparabilidad entre cohortes. Sé preciso y constructivo.
 Al completar este módulo, escribí exactamente: [MODULO:4]
 
 MÓDULO 4 — RECOMENDACIONES
-Ofrecé recomendaciones concretas calibradas según horas de HSE. Sugerí instrumentos usando exactamente estas claves cuando corresponda: [INSTRUMENTO:CPS], [INSTRUMENTO:ROSENBERG], [INSTRUMENTO:GRIT], [INSTRUMENTO:HOPE], [INSTRUMENTO:GSE], [INSTRUMENTO:TMMS], [INSTRUMENTO:CYRM], [INSTRUMENTO:SDQ], [INSTRUMENTO:SECA].
+Ofrecé recomendaciones concretas calibradas según las horas de HSE. Sugerí instrumentos usando estas claves: [INSTRUMENTO:CPS], [INSTRUMENTO:ROSENBERG], [INSTRUMENTO:GRIT], [INSTRUMENTO:HOPE], [INSTRUMENTO:GSE], [INSTRUMENTO:TMMS], [INSTRUMENTO:CYRM], [INSTRUMENTO:SDQ], [INSTRUMENTO:SECA].
 Al completar este módulo, escribí exactamente: [MODULO:5]
 
 MÓDULO 5 — REPORTE FINAL
-Generá un resumen estructurado en este formato exacto:
-
+Generá un resumen en este formato exacto:
 [REPORTE_INICIO]
 ORGANIZACIÓN: (nombre o tipo)
 PROGRAMA: (descripción breve)
 HORAS_HSE: (número)
-SITUACION_ACTUAL: (2-3 oraciones sobre cómo están midiendo hoy)
-BRECHAS: (lista con guiones de las brechas identificadas)
-INSTRUMENTOS_RECOMENDADOS: (claves separadas por coma, ej: CPS,HOPE,GSE)
-PROXIMOS_PASOS: (lista numerada con 3 pasos concretos)
+SITUACION_ACTUAL: (2-3 oraciones)
+BRECHAS: (lista con guiones)
+INSTRUMENTOS_RECOMENDADOS: (claves separadas por coma)
+PROXIMOS_PASOS: (lista numerada con 3 pasos)
 [REPORTE_FIN]
 
 BASE DE CONOCIMIENTO — 9 INSTRUMENTOS:
-1. CPS ADAPTADO (ZIGLA): Competencias para empleabilidad. 4 dimensiones. Validado para jóvenes LAC. Aplicable desde 8hs como línea de base.
-2. ROSENBERG: Autoestima global. 10 ítems. Breve. Complemento útil en programas cortos.
-3. GRIT (Duckworth): Perseverancia y pasión por metas. Requiere 20-25hs mínimo para esperar cambio.
-4. HOPE (Snyder): Agencia y pathways hacia metas. Para programas con proyecto de vida. 15hs+.
+1. CPS ADAPTADO (ZIGLA): 44 ítems, 6 dimensiones. Instrumento de referencia del ecosistema. Aplicable desde 8hs como línea de base.
+2. ROSENBERG: Autoestima global. 10 ítems. Breve, libre. Complemento en programas cortos.
+3. GRIT (Duckworth): Perseverancia y pasión por metas. 13 ítems. Requiere 20-25hs mínimo para esperar cambio.
+4. HOPE (Snyder): Agencia y pensamiento de caminos. 12 ítems (8 válidos + 4 distractores). Para programas con proyecto de vida. 15hs+.
 5. GSE (Schwarzer): Autoeficacia general. 10 ítems. Combinable con CPS.
-6. TMMS-24: Inteligencia emocional percibida. Para programas con foco en regulación emocional.
-7. CYRM-R: Resiliencia ecológica. Para poblaciones en alta vulnerabilidad.
-8. SDQ: Conducta prosocial y dificultades. Tiene versión de hetero-reporte para tutores/docentes.
-9. SECA (AIR/CASEL): Para cuando el financiador exige reporte en framework CASEL.
+6. TMMS-24: Inteligencia emocional percibida. 24 ítems, 3 subescalas. Para programas con foco en regulación emocional.
+7. CYRM-R: Resiliencia ecológica. 28 ítems, 3 niveles. Único que mide el entorno. Para poblaciones en alta vulnerabilidad.
+8. SDQ: Conducta prosocial y dificultades. 25 ítems. Único con versión de reporte externo.
+9. SECA (AIR/CASEL): 5 dominios CASEL. Para cuando el financiador exige reporte en ese framework.
 
 BUENAS PRÁCTICAS:
 - Pre/post es el mínimo para evidenciar cambio. Solo post no permite atribución.
-- No combinar más de 2-3 instrumentos por aplicación (fatiga).
-- Seguimiento a 3-6 meses post-egreso es el estándar de oro.
-- Auto-reporte tiene sesgo de deseabilidad social — mitigarlo con instrucciones claras y anonimato.`;
+- No combinar más de 2-3 instrumentos por aplicación (fatiga del respondente).
+- Seguimiento a 6-12 meses post-egreso es el estándar de oro.
+- El sesgo de deseabilidad social se mitiga con anonimato real, instrucciones estandarizadas y separar al aplicador del evaluador del programa.`;
 
-// ── APP STATE ──────────────────────────────────────────────────
-let API_KEY = '';
+// ── APP STATE ─────────────────────────────────────────────────
 let history = [];
 let isLoading = false;
 let currentModule = 1;
 let reportData = null;
 
-// ── SETUP ──────────────────────────────────────────────────────
-function startChat() {
-  init();
-}
-
-// Auto-init on load
+// ── AUTO INIT ────────────────────────────────────────────────
 window.addEventListener('DOMContentLoaded', () => init());
 
 // ── PROGRESS ──────────────────────────────────────────────────
 function updateProgress(mod) {
   for (let i = 1; i <= 5; i++) {
-    const el = document.getElementById('ps' + i);
-    el.className = 'prog-item' + (i < mod ? ' done' : i === mod ? ' active' : '');
+    document.getElementById('ps' + i).className = 'prog-item' + (i < mod ? ' done' : i === mod ? ' active' : '');
   }
 }
 
-// ── PARSE RESPONSE ────────────────────────────────────────────
+// ── PARSE ─────────────────────────────────────────────────────
 function parseResponse(text) {
-  // Detect module transitions
   const modMatch = text.match(/\[MODULO:(\d)\]/);
-  if (modMatch) {
-    currentModule = parseInt(modMatch[1]);
-    updateProgress(currentModule);
-    text = text.replace(/\[MODULO:\d\]/g, '').trim();
-  }
-
-  // Detect report
+  if (modMatch) { currentModule = parseInt(modMatch[1]); updateProgress(currentModule); text = text.replace(/\[MODULO:\d\]/g, '').trim(); }
   const reportMatch = text.match(/\[REPORTE_INICIO\]([\s\S]*?)\[REPORTE_FIN\]/);
-  if (reportMatch) {
-    reportData = parseReport(reportMatch[1]);
-    text = text.replace(/\[REPORTE_INICIO\][\s\S]*?\[REPORTE_FIN\]/g, '').trim();
-    return { text, hasReport: true };
-  }
-
-  // Replace instrument references with chips
-  text = text.replace(/\[INSTRUMENTO:(\w+)\]/g, (match, key) => {
-    const inst = INSTRUMENTOS[key];
-    if (!inst) return match;
-    return `__CHIP:${key}__`;
-  });
-
+  if (reportMatch) { reportData = parseReport(reportMatch[1]); text = text.replace(/\[REPORTE_INICIO\][\s\S]*?\[REPORTE_FIN\]/g, '').trim(); return { text, hasReport: true }; }
+  text = text.replace(/\[INSTRUMENTO:(\w+)\]/g, (m, key) => INSTRUMENTOS[key] ? `__CHIP:${key}__` : m);
   return { text, hasReport: false };
 }
 
 function parseReport(raw) {
-  const get = (key) => {
-    const match = raw.match(new RegExp(key + ':\\s*([^\\n]+(?:\\n(?!\\w+:)[^\\n]+)*)'));
-    return match ? match[1].trim() : '';
-  };
-  return {
-    org: get('ORGANIZACIÓN'),
-    programa: get('PROGRAMA'),
-    horas: get('HORAS_HSE'),
-    situacion: get('SITUACION_ACTUAL'),
-    brechas: get('BRECHAS'),
-    instrumentos: get('INSTRUMENTOS_RECOMENDADOS').split(',').map(s => s.trim()).filter(Boolean),
-    pasos: get('PROXIMOS_PASOS')
-  };
+  const get = k => { const m = raw.match(new RegExp(k + ':\\s*([^\\n]+(?:\\n(?!\\w+:)[^\\n]+)*)')); return m ? m[1].trim() : ''; };
+  return { org: get('ORGANIZACIÓN'), programa: get('PROGRAMA'), horas: get('HORAS_HSE'), situacion: get('SITUACION_ACTUAL'), brechas: get('BRECHAS'), instrumentos: get('INSTRUMENTOS_RECOMENDADOS').split(',').map(s=>s.trim()).filter(Boolean), pasos: get('PROXIMOS_PASOS') };
 }
 
-// ── RENDER TEXT ───────────────────────────────────────────────
+// ── RENDER ────────────────────────────────────────────────────
 function renderText(text) {
-  // Module tag
   text = text.replace(/📍\s*(Módulo \d[^:\n]*:?[^\n]*)/g, '<span class="mod-tag">$1</span>');
-  // Bold
   text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-  // Instrument chips
-  text = text.replace(/__CHIP:(\w+)__/g, (match, key) => {
+  text = text.replace(/__CHIP:(\w+)__/g, (m, key) => {
     const inst = INSTRUMENTOS[key];
-    if (!inst) return key;
-    return `<span class="instrument-chip" onclick="openModal('${key}')"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>${inst.nombre}</span>`;
+    return inst ? `<span class="instrument-chip" onclick="openModal('${key}')">${inst.nombre}</span>` : key;
   });
-  // Lists
-  text = text.replace(/\n[-•]\s/g, '\n• ');
   const lines = text.split('\n');
-  let html = '';
-  let inList = false;
+  let html = ''; let inList = false;
   for (const line of lines) {
-    if (line.startsWith('• ')) {
-      if (!inList) { html += '<ul>'; inList = true; }
-      html += `<li>${line.slice(2)}</li>`;
-    } else {
-      if (inList) { html += '</ul>'; inList = false; }
-      if (line.trim()) html += `<p>${line}</p>`;
-    }
+    if (/^[-•]\s/.test(line)) { if (!inList) { html += '<ul>'; inList = true; } html += `<li>${line.replace(/^[-•]\s/,'')}</li>`; }
+    else { if (inList) { html += '</ul>'; inList = false; } if (line.trim()) html += `<p>${line}</p>`; }
   }
   if (inList) html += '</ul>';
   return html;
 }
 
 // ── ADD MESSAGE ───────────────────────────────────────────────
-function addMessage(role, text, isModuleEnd = false) {
-  const messagesEl = document.getElementById('messages');
+function addMessage(role, text) {
+  const el = document.getElementById('messages');
   const div = document.createElement('div');
-  div.className = 'msg ' + (role === 'user' ? 'user' : 'agent' + (isModuleEnd ? ' module-end' : ''));
+  div.className = 'msg ' + (role === 'user' ? 'user' : 'agent');
   const bubble = document.createElement('div');
   bubble.className = 'bubble';
-  if (role === 'user') {
-    bubble.textContent = text;
-  } else {
-    bubble.innerHTML = renderText(text);
-  }
+  role === 'user' ? (bubble.textContent = text) : (bubble.innerHTML = renderText(text));
   div.appendChild(bubble);
-  messagesEl.appendChild(div);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
-}
-
-function addReportCard(data) {
-  const messagesEl = document.getElementById('messages');
-  const div = document.createElement('div');
-  div.className = 'msg agent';
-
-  const brechasHtml = data.brechas.split('\n').filter(l => l.trim()).map(l =>
-    `<li>${l.replace(/^[-•]\s*/, '')}</li>`).join('');
-
-  const pasosHtml = data.pasos.split('\n').filter(l => l.trim()).map(l =>
-    `<li>${l.replace(/^\d+\.\s*/, '')}</li>`).join('');
-
-  const chipsHtml = data.instrumentos.map(key => {
-    const inst = INSTRUMENTOS[key];
-    if (!inst) return '';
-    return `<span class="instrument-chip" onclick="openModal('${key}')">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:12px;height:12px"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-      ${inst.nombre}
-    </span>`;
-  }).join('');
-
-  div.innerHTML = `
-    <div class="report-card">
-      <div class="report-card-title">Reporte de diagnóstico HSE</div>
-      <div class="report-card-sub">${data.org} · ${data.programa} · ${data.horas} hs de HSE</div>
-      <div class="report-section">
-        <div class="report-section-label">Situación actual</div>
-        <div class="report-section-content">${data.situacion}</div>
-      </div>
-      <div class="report-section">
-        <div class="report-section-label">Brechas identificadas</div>
-        <div class="report-section-content"><ul style="padding-left:16px">${brechasHtml}</ul></div>
-      </div>
-      <div class="report-section">
-        <div class="report-section-label">Instrumentos recomendados</div>
-        <div style="margin-top:4px">${chipsHtml}</div>
-        <div style="font-size:12px;color:var(--ink-3);margin-top:8px">Hacé clic en cada instrumento para ver los ítems completos, instrucciones y cómo interpretar resultados.</div>
-      </div>
-      <div class="report-section">
-        <div class="report-section-label">Próximos pasos</div>
-        <div class="report-section-content"><ol style="padding-left:16px">${pasosHtml}</ol></div>
-      </div>
-      <div class="report-actions">
-        <button class="report-btn primary" onclick="downloadPDF()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Descargar reporte PDF
-        </button>
-        <button class="report-btn secondary" onclick="resetChat()">
-          Nueva consulta
-        </button>
-      </div>
-    </div>
-  `;
-  messagesEl.appendChild(div);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
+  el.appendChild(div);
+  el.scrollTop = el.scrollHeight;
 }
 
 function addTyping() {
-  const messagesEl = document.getElementById('messages');
+  const el = document.getElementById('messages');
+  const div = document.createElement('div');
+  div.className = 'msg agent'; div.id = 'typing-indicator';
+  div.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
+  el.appendChild(div); el.scrollTop = el.scrollHeight;
+}
+function removeTyping() { const t = document.getElementById('typing-indicator'); if (t) t.remove(); }
+
+function addReportCard(d) {
+  const el = document.getElementById('messages');
   const div = document.createElement('div');
   div.className = 'msg agent';
-  div.id = 'typing-indicator';
-  div.innerHTML = '<div class="typing-bubble"><span></span><span></span><span></span></div>';
-  messagesEl.appendChild(div);
-  messagesEl.scrollTop = messagesEl.scrollHeight;
+  const brechas = d.brechas.split('\n').filter(l=>l.trim()).map(l=>`<li>${l.replace(/^[-•]\s*/,'')}</li>`).join('');
+  const pasos = d.pasos.split('\n').filter(l=>l.trim()).map((l,i)=>`<li>${l.replace(/^\d+\.\s*/,'')}</li>`).join('');
+  const chips = d.instrumentos.map(k => { const i = INSTRUMENTOS[k]; return i ? `<span class="instrument-chip" onclick="openModal('${k}')">${i.nombre}</span>` : ''; }).join('');
+  div.innerHTML = `<div class="report-card">
+    <div class="report-card-title">Reporte de diagnóstico HSE</div>
+    <div class="report-card-sub">${d.org} · ${d.programa} · ${d.horas} hs HSE</div>
+    <div class="report-section"><div class="report-section-label">Situación actual</div><div class="report-section-content">${d.situacion}</div></div>
+    <div class="report-section"><div class="report-section-label">Brechas identificadas</div><div class="report-section-content"><ul style="padding-left:16px">${brechas}</ul></div></div>
+    <div class="report-section"><div class="report-section-label">Instrumentos recomendados</div><div style="margin-top:6px">${chips}</div><div style="font-size:11px;color:var(--ink-3);margin-top:8px;font-weight:500">Hacé clic en cada instrumento para ver los ítems completos, instrucciones y cómo interpretar resultados.</div></div>
+    <div class="report-section"><div class="report-section-label">Próximos pasos</div><div class="report-section-content"><ol style="padding-left:16px">${pasos}</ol></div></div>
+    <div class="report-actions">
+      <button class="report-btn primary" onclick="downloadPDF()"><svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Descargar reporte</button>
+      <button class="report-btn secondary" onclick="resetChat()">Nueva consulta</button>
+    </div>
+  </div>`;
+  el.appendChild(div); el.scrollTop = el.scrollHeight;
 }
 
-function removeTyping() {
-  const t = document.getElementById('typing-indicator');
-  if (t) t.remove();
-}
-
-// ── API CALL ──────────────────────────────────────────────────
-async function callAPI(messages, maxTokens = 800) {
+// ── API ───────────────────────────────────────────────────────
+async function callAPI(messages, maxTokens = 900) {
   const res = await fetch('/api/chat', {
     method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: maxTokens,
-      system: SYSTEM_PROMPT,
-      messages
-    })
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ max_tokens: maxTokens, messages })
   });
   const data = await res.json();
   return data.content?.[0]?.text || '';
 }
 
-// ── SEND MESSAGE ──────────────────────────────────────────────
 async function handleSend() {
   const inputEl = document.getElementById('user-input');
   const text = inputEl.value.trim();
   if (!text || isLoading) return;
-  inputEl.value = '';
-  inputEl.style.height = '42px';
-  await sendMessage(text);
-}
-
-async function sendMessage(userText) {
-  isLoading = true;
-  document.getElementById('send-btn').disabled = true;
-
-  addMessage('user', userText);
-  history.push({ role: 'user', content: userText });
+  inputEl.value = ''; inputEl.style.height = '42px';
+  isLoading = true; document.getElementById('send-btn').disabled = true;
+  addMessage('user', text);
+  history.push({ role: 'user', content: text });
   addTyping();
-
   try {
-    const raw = await callAPI(history, 1000);
+    const raw = await callAPI(history);
     removeTyping();
-    const { text, hasReport } = parseResponse(raw);
-
-    if (text) {
-      addMessage('agent', text, currentModule > 1);
-    }
-    if (hasReport && reportData) {
-      addReportCard(reportData);
-    }
-
+    const { text: t, hasReport } = parseResponse(raw);
+    if (t) addMessage('agent', t);
+    if (hasReport && reportData) addReportCard(reportData);
     history.push({ role: 'assistant', content: raw });
-  } catch (e) {
-    removeTyping();
-    addMessage('agent', 'Hubo un error al conectar. Verificá tu API key e intentá de nuevo.');
-  }
-
-  isLoading = false;
-  document.getElementById('send-btn').disabled = false;
+  } catch(e) { removeTyping(); addMessage('agent', 'Hubo un error al conectar. Verificá la API key e intentá de nuevo.'); }
+  isLoading = false; document.getElementById('send-btn').disabled = false;
   document.getElementById('user-input').focus();
 }
 
-// ── INIT ──────────────────────────────────────────────────────
 async function init() {
-  isLoading = true;
-  document.getElementById('send-btn').disabled = true;
+  isLoading = true; document.getElementById('send-btn').disabled = true;
   addTyping();
-
-  const firstMsg = 'Hola, quiero analizar cómo estamos midiendo habilidades socioemocionales en nuestro programa.';
+  const first = 'Hola, quiero analizar cómo estamos midiendo habilidades socioemocionales en nuestro programa.';
   try {
-    const raw = await callAPI([{ role: 'user', content: firstMsg }], 600);
+    const raw = await callAPI([{ role: 'user', content: first }], 600);
     removeTyping();
     const { text } = parseResponse(raw);
     if (text) addMessage('agent', text);
-    history.push({ role: 'user', content: firstMsg });
+    history.push({ role: 'user', content: first });
     history.push({ role: 'assistant', content: raw });
-  } catch (e) {
-    removeTyping();
-    addMessage('agent', '¡Hola! Soy el consultor HSE de ZIGLA. ¿Me contás el nombre de tu organización y qué tipo de programa tienen?');
-  }
-
-  isLoading = false;
-  document.getElementById('send-btn').disabled = false;
+  } catch(e) { removeTyping(); addMessage('agent', 'Hola, soy el consultor HSE de ZIGLA. ¿Me contás el nombre de tu organización y qué tipo de programa tienen?'); }
+  isLoading = false; document.getElementById('send-btn').disabled = false;
 }
 
-// ── RESET ─────────────────────────────────────────────────────
 function resetChat() {
-  history = [];
-  reportData = null;
-  currentModule = 1;
-  updateProgress(1);
-  document.getElementById('messages').innerHTML = `
-    <div id="welcome-card" class="msg">
-      <div style="background:var(--green-light);border:1px solid #9FE1CB;border-radius:14px;padding:20px;display:flex;gap:14px;max-width:100%">
-        <div class="wc-icon" style="width:40px;height:40px;background:var(--green);border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0">
-          <svg viewBox="0 0 24 24" style="width:20px;height:20px;fill:white"><path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-        </div>
-        <div>
-          <div class="wc-title" style="font-family:'DM Serif Display',serif;font-size:16px;color:var(--green-dark);margin-bottom:4px">Bienvenido al Consultor HSE</div>
-          <div class="wc-text" style="font-size:13px;color:#0F6E56;line-height:1.55">Nueva consulta iniciada. Voy a hacerte algunas preguntas sobre tu organización y programa.</div>
-        </div>
-      </div>
-    </div>
-  `;
+  history = []; reportData = null; currentModule = 1; updateProgress(1);
+  document.getElementById('messages').innerHTML = `<div id="welcome-card" style="background:var(--navy);border-radius:14px;padding:20px 22px"><div style="font-weight:700;font-size:15px;color:white;margin-bottom:6px;letter-spacing:-.2px">Consultor HSE — ZIGLA</div><div style="font-size:12px;color:rgba(255,255,255,.75);line-height:1.6;font-weight:400">Nueva consulta iniciada. Voy a hacerte algunas preguntas sobre tu organización y programa.</div></div>`;
   init();
 }
 
-// ── MODAL FICHA ───────────────────────────────────────────────
+// ── MODAL ─────────────────────────────────────────────────────
 function openModal(key) {
   const inst = INSTRUMENTOS[key];
   if (!inst) return;
-
-  const itemsHtml = inst.items.map((item, i) =>
-    `<div class="item-row"><span class="item-num">${i + 1}</span><span>${item}</span></div>`
+  const itemsHtml = inst.items.map(item =>
+    `<div class="item-row"><span class="item-num">${item.n}</span><span>${item.text}${item.inv ? '<span class="item-tag inv">Invertido</span>' : ''}<br><span style="font-size:10px;color:var(--ink-3);font-weight:500">${item.dim}</span></span></div>`
   ).join('');
-
-  const scaleHtml = inst.escala.map(s => `<span class="scale-pill">${s}</span>`).join('');
   const dimsHtml = inst.dimensiones.map(d => `<span class="modal-dim">${d}</span>`).join('');
-
+  const scaleHtml = inst.escala.map(s => `<span class="scale-pill">${s}</span>`).join('');
   document.getElementById('modal-content').innerHTML = `
-    <div class="modal-tag">Ficha del instrumento</div>
+    <div class="modal-badge">Ficha del instrumento</div>
     <div class="modal-title">${inst.nombre}</div>
     <div class="modal-subtitle">${inst.autor}</div>
-    <div class="modal-section">
-      <div class="modal-section-title">Descripción</div>
-      <p style="font-size:14px;color:var(--ink-2);line-height:1.6">${inst.descripcion}</p>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Dimensiones</div>
-      <div class="modal-dims">${dimsHtml}</div>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Aplicación</div>
-      <div class="apply-row">
-        <span class="apply-chip when">⏱ ${inst.aplicacion.cuando}</span>
-        <span class="apply-chip who">👤 ${inst.aplicacion.quien}</span>
-        <span class="apply-chip time">${inst.aplicacion.tiempo}</span>
-      </div>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Escala de respuesta</div>
-      <div class="scale-row">${scaleHtml}</div>
-    </div>
-    <div class="modal-section">
-      <div class="modal-section-title">Ítems (muestra)</div>
-      ${itemsHtml}
-    </div>
-    <div style="background:var(--green-light);border-radius:10px;padding:12px 14px;font-size:13px;color:var(--green-dark);line-height:1.55;margin-top:4px">
-      <strong>Nota de aplicación:</strong> ${inst.nota}
-    </div>
-  `;
+    <div class="modal-section"><div class="modal-section-title">Descripción</div><p style="font-size:13px;color:var(--ink-2);line-height:1.6">${inst.descripcion}</p></div>
+    <div class="modal-section"><div class="modal-section-title">Dimensiones</div><div class="modal-dims">${dimsHtml}</div></div>
+    <div class="modal-section"><div class="modal-section-title">Aplicación</div><div class="apply-row"><span class="apply-chip when">⏱ ${inst.aplicacion.cuando}</span><span class="apply-chip who">👤 ${inst.aplicacion.quien}</span><span class="apply-chip time">${inst.aplicacion.tiempo}</span></div></div>
+    <div class="modal-section"><div class="modal-section-title">Escala de respuesta</div><div class="scale-row">${scaleHtml}</div></div>
+    <div class="modal-section"><div class="modal-section-title">Ítems completos (${inst.items.length})</div>${itemsHtml}</div>
+    <div class="modal-note"><strong>Nota de aplicación:</strong> ${inst.nota}</div>`;
   document.getElementById('modal-overlay').classList.add('open');
 }
+function closeModal(e) { if (e.target === document.getElementById('modal-overlay')) document.getElementById('modal-overlay').classList.remove('open'); }
+function closeModalDirect() { document.getElementById('modal-overlay').classList.remove('open'); }
 
-function closeModal(e) {
-  if (e.target === document.getElementById('modal-overlay')) {
-    document.getElementById('modal-overlay').classList.remove('open');
-  }
-}
-function closeModalDirect() {
-  document.getElementById('modal-overlay').classList.remove('open');
-}
-
-// ── PDF DOWNLOAD ──────────────────────────────────────────────
+// ── PDF ───────────────────────────────────────────────────────
 function downloadPDF() {
   if (!reportData) return;
   const d = reportData;
-
-  const instrumentosDetalle = d.instrumentos.map(key => {
+  const fichas = d.instrumentos.map(key => {
     const inst = INSTRUMENTOS[key];
     if (!inst) return '';
-    const items = inst.items.slice(0, 5).map((item, i) => `    ${i+1}. ${item}`).join('\n');
-    return `
-INSTRUMENTO: ${inst.nombre}
-Autor: ${inst.autor}
-Descripción: ${inst.descripcion}
-Dimensiones: ${inst.dimensiones.join(' · ')}
-Aplicación: ${inst.aplicacion.cuando} · ${inst.aplicacion.quien} · ${inst.aplicacion.tiempo}
-Escala: ${inst.escala.join(' / ')}
-Ítems (primeros 5 de muestra):
-${items}
-Nota: ${inst.nota}
-${'─'.repeat(50)}`;
+    const items = inst.items.map((item, i) => `  ${item.n}. ${item.text}${item.inv ? ' [Invertido]' : ''}\n     Dimensión: ${item.dim}`).join('\n');
+    const escala = inst.escala.join(' / ');
+    return `\n${'━'.repeat(60)}\n${inst.nombre.toUpperCase()}\nAutor/a: ${inst.autor}\n${inst.descripcion}\n\nDimensiones:\n${inst.dimensiones.map(d=>`  • ${d}`).join('\n')}\n\nEscala: ${escala}\n\nAplicación:\n  • Cuándo: ${inst.aplicacion.cuando}\n  • Quién: ${inst.aplicacion.quien}\n  • Tiempo: ${inst.aplicacion.tiempo}\n\nÍtems completos (${inst.items.length}):\n${items}\n\nNota: ${inst.nota}`;
   }).join('\n');
 
-  const brechas = d.brechas.split('\n').filter(l=>l.trim()).map(l => l.replace(/^[-•]\s*/,'')).join('\n- ');
-  const pasos = d.pasos.split('\n').filter(l=>l.trim()).map((l,i) => `${i+1}. ${l.replace(/^\d+\.\s*/,'')}`).join('\n');
+  const brechas = d.brechas.split('\n').filter(l=>l.trim()).map(l=>`  • ${l.replace(/^[-•]\s*/,'')}`).join('\n');
+  const pasos = d.pasos.split('\n').filter(l=>l.trim()).map((l,i)=>`  ${i+1}. ${l.replace(/^\d+\.\s*/,'')}`).join('\n');
 
-  const content = `REPORTE DE DIAGNÓSTICO HSE
-Consultor HSE — ZIGLA
-${'═'.repeat(50)}
+  const content = `ZIGLA — CONSULTOR HSE
+REPORTE DE DIAGNÓSTICO DE MEDICIÓN DE HABILIDADES SOCIOEMOCIONALES
+${'═'.repeat(60)}
 
 DATOS DEL PROGRAMA
-Organización: ${d.org}
-Programa: ${d.programa}
-Horas de HSE: ${d.horas}
+${'─'.repeat(40)}
+Organización:  ${d.org}
+Programa:      ${d.programa}
+Horas de HSE:  ${d.horas}
 
-${'─'.repeat(50)}
+${'═'.repeat(60)}
 SITUACIÓN ACTUAL
+${'─'.repeat(40)}
 ${d.situacion}
 
-${'─'.repeat(50)}
+${'═'.repeat(60)}
 BRECHAS IDENTIFICADAS
-- ${brechas}
+${'─'.repeat(40)}
+${brechas}
 
-${'─'.repeat(50)}
+${'═'.repeat(60)}
 PRÓXIMOS PASOS
+${'─'.repeat(40)}
 ${pasos}
 
-${'═'.repeat(50)}
-FICHAS DE INSTRUMENTOS RECOMENDADOS
-${instrumentosDetalle}
+${'═'.repeat(60)}
+INSTRUMENTOS RECOMENDADOS — FICHAS COMPLETAS
+${'─'.repeat(40)}
+${fichas}
 
-${'═'.repeat(50)}
+${'═'.repeat(60)}
 Generado por Consultor HSE — ZIGLA
-zigla.la`;
+zigla.la | ${new Date().toLocaleDateString('es-AR', {month:'long', year:'numeric'})}` ;
 
   const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `Reporte_HSE_${d.org.replace(/\s+/g,'_').slice(0,30)}.txt`;
+  a.download = `Reporte_HSE_${d.org.replace(/\s+/g,'_').slice(0,30)}_ZIGLA.txt`;
   a.click();
   URL.revokeObjectURL(url);
 }
 
-// ── TEXTAREA AUTO-RESIZE ──────────────────────────────────────
+// ── TEXTAREA ──────────────────────────────────────────────────
 const inputEl = document.getElementById('user-input');
-inputEl.addEventListener('input', function() {
-  this.style.height = '42px';
-  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
-});
-inputEl.addEventListener('keydown', function(e) {
-  if (e.key === 'Enter' && !e.shiftKey) {
-    e.preventDefault();
-    handleSend();
-  }
-});
+inputEl.addEventListener('input', function() { this.style.height = '42px'; this.style.height = Math.min(this.scrollHeight, 120) + 'px'; });
+inputEl.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); handleSend(); } });
 </script>
 </body>
 </html>
