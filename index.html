@@ -686,7 +686,7 @@ async function init() {
   addTyping();
   const first = 'Hola, quiero analizar cómo estamos midiendo habilidades socioemocionales en nuestro programa.';
   try {
-    const raw = await callAPI([{ role: 'user', content: first }], 600);
+    const raw = await callAPI([{ role: 'user', content: first }], 1000);
     removeTyping();
     const { text } = parseResponse(raw);
     if (text) addMessage('agent', text);
